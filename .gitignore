@@ -41,3 +41,7 @@ example
 # generated native folders
 /ios
 /android
+
+# Fotos pessoais
+/assets/images/minha-foto.jpeg
+/assets/images/minha-foto1.jpeg

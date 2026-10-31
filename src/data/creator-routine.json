@@ -1,0 +1,1048 @@
+{
+  "format": "meutreino-routine",
+  "version": 1,
+  "exportedAt": "2026-10-29T19:11:46.306Z",
+  "exercises": [
+    {
+      "id": "mvtsow7k-8-h3bwqxreq2b",
+      "dayId": "quarta",
+      "name": "Puxada alta dorsal",
+      "imageFile": null,
+      "libraryImageId": "lat-pulldown-start.webp",
+      "position": 0,
+      "sets": [
+        {
+          "weight": "2",
+          "repetitions": 1
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        }
+      ]
+    },
+    {
+      "id": "mvtspnx5-9-6vjz3vw379u",
+      "dayId": "quarta",
+      "name": "Puxada alta dorsal (com pegador V)",
+      "imageFile": null,
+      "libraryImageId": "v-bar-lat-pulldown-start.webp",
+      "position": 1,
+      "sets": [
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        }
+      ]
+    },
+    {
+      "id": "mvtsrk0b-10-y6siu1ae38n",
+      "dayId": "quarta",
+      "name": "Antebraço na polia (interno)",
+      "imageFile": null,
+      "libraryImageId": "rosca direta no cross over.png",
+      "position": 2,
+      "sets": [
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        }
+      ]
+    },
+    {
+      "id": "mvtsvwze-11-hcm1vdnmrbb",
+      "dayId": "quarta",
+      "name": "Antebraço na polia (externo)",
+      "imageFile": null,
+      "libraryImageId": "straight-bar-cable-front-raise-peak.webp",
+      "position": 3,
+      "sets": [
+        {
+          "weight": "2",
+          "repetitions": 1
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        }
+      ]
+    },
+    {
+      "id": "mvtsx63p-12-pl2esdjdyz",
+      "dayId": "quarta",
+      "name": "Remada (com barra)",
+      "imageFile": null,
+      "libraryImageId": "barbell-row-peak.webp",
+      "position": 4,
+      "sets": [
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        }
+      ]
+    },
+    {
+      "id": "mvtsy4zm-13-jj66cyq3jkb",
+      "dayId": "quarta",
+      "name": "Rosca martelo (na polia)",
+      "imageFile": null,
+      "libraryImageId": "cable-hammer-curl-peak.webp",
+      "position": 5,
+      "sets": [
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        }
+      ]
+    },
+    {
+      "id": "mvtsywlf-14-29fmhdbwye4",
+      "dayId": "quarta",
+      "name": "Rosca martelo",
+      "imageFile": null,
+      "libraryImageId": "hammer-curl-start.webp",
+      "position": 6,
+      "sets": [
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        }
+      ]
+    },
+    {
+      "id": "mvtszces-15-dvlpt540tgm",
+      "dayId": "quarta",
+      "name": "Remada (na polia) (sentado)",
+      "imageFile": null,
+      "libraryImageId": "seated-cable-row-peak.webp",
+      "position": 7,
+      "sets": [
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        }
+      ]
+    },
+    {
+      "id": "mvtt0woh-16-3b8e0klr63m",
+      "dayId": "quinta",
+      "name": "Elevação de panturrilha (no Smith)",
+      "imageFile": null,
+      "libraryImageId": "smith-machine-calf-raise-peak.webp",
+      "position": 0,
+      "sets": [
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        }
+      ]
+    },
+    {
+      "id": "mvtt4dr6-1-h0e4rx84jq8",
+      "dayId": "quinta",
+      "name": "Elevação de panturrilha (sentado)",
+      "imageFile": null,
+      "libraryImageId": "seated-calf-raise-start.webp",
+      "position": 1,
+      "sets": [
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        }
+      ]
+    },
+    {
+      "id": "mvtt4rgm-2-r213iww9jlq",
+      "dayId": "quinta",
+      "name": "Agachamento (no Smith)",
+      "imageFile": null,
+      "libraryImageId": "smith-machine-squat-peak.webp",
+      "position": 2,
+      "sets": [
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        }
+      ]
+    },
+    {
+      "id": "mvtt4y0p-3-h05d2edt6yu",
+      "dayId": "quinta",
+      "name": "Cadeira extensora",
+      "imageFile": null,
+      "libraryImageId": "leg-extension-peak.webp",
+      "position": 3,
+      "sets": [
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        }
+      ]
+    },
+    {
+      "id": "mvtt5vys-4-i7qlpv6e2w",
+      "dayId": "quinta",
+      "name": "Mesa flexora (com uma perna)",
+      "imageFile": null,
+      "libraryImageId": "single-leg-lying-leg-curl-start.webp",
+      "position": 4,
+      "sets": [
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        }
+      ]
+    },
+    {
+      "id": "mvtt6pxs-5-08crf5p8n5f4",
+      "dayId": "quinta",
+      "name": "Abdominal curto (na polia)",
+      "imageFile": null,
+      "libraryImageId": "cable-crunch-peak.webp",
+      "position": 5,
+      "sets": [
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        }
+      ]
+    },
+    {
+      "id": "mvtw254u-9-bj9ollqv6co",
+      "dayId": "sabado",
+      "name": "Elevação lateral",
+      "imageFile": null,
+      "libraryImageId": "lateral-raise-peak.webp",
+      "position": 0,
+      "sets": [
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        }
+      ]
+    },
+    {
+      "id": "mvtw29e1-10-pleag2vw60n",
+      "dayId": "sabado",
+      "name": "Desenvolvimento (com halteres) (sentado)",
+      "imageFile": null,
+      "libraryImageId": "seated-db-press-peak.webp",
+      "position": 1,
+      "sets": [
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        }
+      ]
+    },
+    {
+      "id": "mvtw2dru-11-ozvt1zfkbjc",
+      "dayId": "sabado",
+      "name": "Elevação lateral (com halteres) (sentado)",
+      "imageFile": null,
+      "libraryImageId": "seated-dumbbell-lateral-raise-peak.webp",
+      "position": 2,
+      "sets": [
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        }
+      ]
+    },
+    {
+      "id": "mvtw2hz9-12-4z34uqs9mns",
+      "dayId": "sabado",
+      "name": "Abdominal curto (na polia)",
+      "imageFile": null,
+      "libraryImageId": "cable-crunch-peak.webp",
+      "position": 3,
+      "sets": [
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        }
+      ]
+    },
+    {
+      "id": "mvtw3831-13-pmko6sva0l8",
+      "dayId": "sabado",
+      "name": "antebraco na polia (interna)",
+      "imageFile": null,
+      "libraryImageId": "rosca direta no cross over.png",
+      "position": 4,
+      "sets": [
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        }
+      ]
+    },
+    {
+      "id": "mvtw3cde-14-cwoyaoq9qf",
+      "dayId": "sabado",
+      "name": "Antebraço na polia (externo)",
+      "imageFile": null,
+      "libraryImageId": "straight-bar-cable-front-raise-peak.webp",
+      "position": 5,
+      "sets": [
+        {
+          "weight": "2",
+          "repetitions": 1
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        }
+      ]
+    },
+    {
+      "id": "mvs7szxp-1-4xadbridqi7",
+      "dayId": "segunda",
+      "name": "Supino reto com a barra",
+      "imageFile": null,
+      "libraryImageId": "bench-press-start.webp",
+      "position": 0,
+      "sets": [
+        {
+          "weight": "10",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        }
+      ]
+    },
+    {
+      "id": "mvskrnak-1-urfmomizaa",
+      "dayId": "segunda",
+      "name": "Tríceps na polia",
+      "imageFile": null,
+      "libraryImageId": "single-arm-tricep-pushdown-start.webp",
+      "position": 1,
+      "sets": [
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        }
+      ]
+    },
+    {
+      "id": "mvskryys-2-340r2yd45f8",
+      "dayId": "segunda",
+      "name": "Voador peitoral (pec deck)",
+      "imageFile": null,
+      "libraryImageId": "pec-deck-start.webp",
+      "position": 2,
+      "sets": [
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        }
+      ]
+    },
+    {
+      "id": "mvskssvh-3-0yb4fhzx5rt",
+      "dayId": "segunda",
+      "name": "Antebraço na polia (externo)",
+      "imageFile": null,
+      "libraryImageId": "straight-bar-cable-front-raise-peak.webp",
+      "position": 3,
+      "sets": [
+        {
+          "weight": "2",
+          "repetitions": 1
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        }
+      ]
+    },
+    {
+      "id": "mvskuejl-4-rfttrhudb1j",
+      "dayId": "segunda",
+      "name": "antebraco na polia (interna)",
+      "imageFile": null,
+      "libraryImageId": "rosca direta no cross over.png",
+      "position": 4,
+      "sets": [
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        }
+      ]
+    },
+    {
+      "id": "mvts92aq-1-a305yaee2xe",
+      "dayId": "segunda",
+      "name": "Tríceps francês acima da cabeça (na polia)",
+      "imageFile": null,
+      "libraryImageId": "cable-overhead-tricep-extension-peak.webp",
+      "position": 5,
+      "sets": [
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        }
+      ]
+    },
+    {
+      "id": "mvttaaqs-1-mp2a5nkih6",
+      "dayId": "sexta",
+      "name": "Puxada alta dorsal",
+      "imageFile": null,
+      "libraryImageId": "lat-pulldown-start.webp",
+      "position": 0,
+      "sets": [
+        {
+          "weight": "2",
+          "repetitions": 1
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        }
+      ]
+    },
+    {
+      "id": "mvtvz632-2-o1aaofnznm",
+      "dayId": "sexta",
+      "name": "Puxada alta dorsal (com pegador V)",
+      "imageFile": null,
+      "libraryImageId": "v-bar-lat-pulldown-start.webp",
+      "position": 1,
+      "sets": [
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        }
+      ]
+    },
+    {
+      "id": "mvtvzehy-3-00jfv6z2strdu",
+      "dayId": "sexta",
+      "name": "Remada (com barra)",
+      "imageFile": null,
+      "libraryImageId": "barbell-row-peak.webp",
+      "position": 2,
+      "sets": [
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        }
+      ]
+    },
+    {
+      "id": "mvtvzjsm-4-pucyts358a",
+      "dayId": "sexta",
+      "name": "Rosca martelo",
+      "imageFile": null,
+      "libraryImageId": "hammer-curl-start.webp",
+      "position": 3,
+      "sets": [
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        }
+      ]
+    },
+    {
+      "id": "mvtvzofw-5-kq5iw9lx5ip",
+      "dayId": "sexta",
+      "name": "Rosca martelo (na polia)",
+      "imageFile": null,
+      "libraryImageId": "cable-hammer-curl-peak.webp",
+      "position": 4,
+      "sets": [
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        }
+      ]
+    },
+    {
+      "id": "mvtvzsps-6-n2ti635mnad",
+      "dayId": "sexta",
+      "name": "Remada (na polia) (sentado)",
+      "imageFile": null,
+      "libraryImageId": "seated-cable-row-peak.webp",
+      "position": 5,
+      "sets": [
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        }
+      ]
+    },
+    {
+      "id": "mvtw0gn3-7-lg2qzo6lu6e",
+      "dayId": "sexta",
+      "name": "Tríceps na polia",
+      "imageFile": null,
+      "libraryImageId": "single-arm-tricep-pushdown-start.webp",
+      "position": 6,
+      "sets": [
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        }
+      ]
+    },
+    {
+      "id": "mvtw0n3i-8-gjgjg6b1g16",
+      "dayId": "sexta",
+      "name": "Tríceps francês acima da cabeça (na polia)",
+      "imageFile": null,
+      "libraryImageId": "cable-overhead-tricep-extension-peak.webp",
+      "position": 7,
+      "sets": [
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        }
+      ]
+    },
+    {
+      "id": "mvtsclgv-2-uz4skvjvhd",
+      "dayId": "terca",
+      "name": "Elevação lateral",
+      "imageFile": null,
+      "libraryImageId": "lateral-raise-peak.webp",
+      "position": 0,
+      "sets": [
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        }
+      ]
+    },
+    {
+      "id": "mvtsdf8y-3-xd7izqnvp7",
+      "dayId": "terca",
+      "name": "Elevação de panturrilha (no Smith)",
+      "imageFile": null,
+      "libraryImageId": "smith-machine-calf-raise-peak.webp",
+      "position": 1,
+      "sets": [
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        }
+      ]
+    },
+    {
+      "id": "mvtsexux-4-b8v56ge8ju",
+      "dayId": "terca",
+      "name": "Desenvolvimento (com halteres) (sentado)",
+      "imageFile": null,
+      "libraryImageId": "seated-db-press-peak.webp",
+      "position": 2,
+      "sets": [
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        }
+      ]
+    },
+    {
+      "id": "mvtsfxs8-5-7vz2r13xdhe",
+      "dayId": "terca",
+      "name": "Elevação lateral (com halteres) (sentado)",
+      "imageFile": null,
+      "libraryImageId": "seated-dumbbell-lateral-raise-peak.webp",
+      "position": 3,
+      "sets": [
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        }
+      ]
+    },
+    {
+      "id": "mvtsgn8u-6-q2tymlzbt0m",
+      "dayId": "terca",
+      "name": "Elevação de panturrilha (sentado)",
+      "imageFile": null,
+      "libraryImageId": "seated-calf-raise-start.webp",
+      "position": 4,
+      "sets": [
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        }
+      ]
+    },
+    {
+      "id": "mvtshbxl-7-1nmxah289ie",
+      "dayId": "terca",
+      "name": "Abdominal curto (na polia)",
+      "imageFile": null,
+      "libraryImageId": "cable-crunch-peak.webp",
+      "position": 5,
+      "sets": [
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        },
+        {
+          "weight": "0",
+          "repetitions": 0
+        }
+      ]
+    }
+  ],
+  "images": {}
+}
