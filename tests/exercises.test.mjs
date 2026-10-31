@@ -22,6 +22,47 @@ function connect(path) {
 
 const exercise = (id, dayId, position = 0) => ({ id, dayId, name: 'Nome informado pelo usuário', imageFile: null, position, sets: emptySets() });
 
+test('grupos musculares persistem ao reabrir o banco e não alteram exercícios nem outros dias', async () => {
+  const folder = await mkdtemp(join(tmpdir(), 'meutreino-groups-'));
+  const path = join(folder, 'routine.db');
+  let connection;
+  try {
+    connection = connect(path);
+    await initializeDatabase(connection.adapter);
+    const original = exercise('existing', 'segunda');
+    await connection.repo.save(original);
+    assert.deepEqual(await connection.repo.loadDayGroups(), {});
+    await connection.repo.saveDayGroups('segunda', [' Costas ', '', 'Bíceps']);
+    await connection.repo.saveDayGroups('sabado', ['Ombro', 'Antebraço']);
+    await connection.repo.saveDayGroups('segunda', ['Peito']);
+    connection.native.close();
+    connection = connect(path);
+    await initializeDatabase(connection.adapter);
+    assert.deepEqual(await connection.repo.loadDayGroups(), {
+      segunda: ['Peito'], sabado: ['Ombro', 'Antebraço'],
+    });
+    assert.deepEqual(await connection.repo.loadAll(), [original]);
+  } finally {
+    connection?.native.close();
+    await rm(folder, { recursive: true, force: true });
+  }
+});
+
+test('edição de grupos rejeita dados vazios e falhas de gravação preservam os grupos anteriores', async () => {
+  const connection = connect(':memory:');
+  try {
+    await initializeDatabase(connection.adapter);
+    await connection.repo.saveDayGroups('segunda', ['Peito']);
+    await assert.rejects(connection.repo.saveDayGroups('segunda', [' ', '']), /pelo menos um/);
+    await assert.rejects(connection.repo.saveDayGroups('inexistente', ['Costas']), /dia de treino/);
+    await assert.rejects(connection.repo.saveDayGroups('segunda', ['a'.repeat(101)]), /100 caracteres/);
+    connection.native.exec(`CREATE TRIGGER reject_group_update BEFORE UPDATE ON workout_day_groups
+      BEGIN SELECT RAISE(ABORT, 'falha simulada'); END;`);
+    await assert.rejects(connection.repo.saveDayGroups('segunda', ['Costas']), /falha simulada/);
+    assert.deepEqual(await connection.repo.loadDayGroups(), { segunda: ['Peito'] });
+  } finally { connection.native.close(); }
+});
+
 test('instalação nova recebe os 40 exercícios reais e não recria itens excluídos', async () => {
   const routine = JSON.parse(await readFile(new URL('../src/data/creator-routine.json', import.meta.url), 'utf8'));
   const connection = connect(':memory:');

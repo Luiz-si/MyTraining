@@ -1,3 +1,4 @@
+import { workoutColors } from '@/constants/workout-colors';
 import { useState } from 'react';
 import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 
@@ -50,10 +51,10 @@ export function NumericControl({ value, label, integer = false, onValue, onStep 
 
 const local = StyleSheet.create({
   column: { flex: 1, minWidth: 116 },
-  control: { flexDirection: 'row', alignItems: 'center', borderWidth: 1, borderColor: '#34473A', borderRadius: 10, overflow: 'hidden' },
-  step: { width: 44, minHeight: 44, alignItems: 'center', justifyContent: 'center', backgroundColor: '#25351F' },
-  symbol: { color: '#B0F36D', fontSize: 23, fontWeight: '600' },
-  input: { flex: 1, minWidth: 26, minHeight: 44, paddingHorizontal: 2, paddingVertical: 8, color: '#F4F7F3', textAlign: 'center', fontSize: 13 },
+  control: { flexDirection: 'row', alignItems: 'center', borderWidth: 1, borderColor: workoutColors.border, borderRadius: 10, overflow: 'hidden' },
+  step: { width: 44, minHeight: 44, alignItems: 'center', justifyContent: 'center', backgroundColor: workoutColors.selected },
+  symbol: { color: workoutColors.accent, fontSize: 23, fontWeight: '600' },
+  input: { flex: 1, minWidth: 26, minHeight: 44, paddingHorizontal: 2, paddingVertical: 8, color: workoutColors.text, textAlign: 'center', fontSize: 13 },
   disabled: { opacity: 0.4 },
   pressed: { opacity: 0.6 },
   invalid: { backgroundColor: '#482625' },

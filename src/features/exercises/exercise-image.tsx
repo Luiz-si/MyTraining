@@ -1,3 +1,4 @@
+import { workoutColors } from '@/constants/workout-colors';
 import { useState } from 'react';
 import { Image, StyleSheet, Text, View, type ImageSourcePropType } from 'react-native';
 
@@ -14,7 +15,7 @@ export function ExerciseImage({ source, small = false }: { source?: ImageSourceP
 }
 
 const local = StyleSheet.create({
-  image: { borderRadius: 12, backgroundColor: '#25351F' },
+  image: { borderRadius: 12, backgroundColor: workoutColors.selected },
   placeholder: { alignItems: 'center', justifyContent: 'center' },
-  icon: { color: '#B0F36D', fontSize: 26 },
+  icon: { color: workoutColors.accent, fontSize: 26 },
 });

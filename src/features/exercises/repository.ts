@@ -36,6 +36,10 @@ export async function initializeDatabase(db: ExerciseDatabase) {
       key TEXT PRIMARY KEY NOT NULL,
       value TEXT NOT NULL
     );
+    CREATE TABLE IF NOT EXISTS workout_day_groups (
+      day_id TEXT PRIMARY KEY NOT NULL,
+      muscles_json TEXT NOT NULL
+    );
   `);
   const columns = await db.getAllAsync<{ name: string }>('PRAGMA table_info(creator_exercises)');
   if (!columns.some((column) => column.name === 'library_image_id')) {
@@ -53,6 +57,25 @@ function fromRow(row: Row): LocalExercise {
 
 export function createRepository(db: ExerciseDatabase) {
   const repository = {
+    async loadDayGroups(): Promise<Record<string, string[]>> {
+      const rows = await db.getAllAsync<{ day_id: string; muscles_json: string }>(
+        'SELECT day_id, muscles_json FROM workout_day_groups');
+      return Object.fromEntries(rows.map((row) => [row.day_id, JSON.parse(row.muscles_json)]));
+    },
+    async saveDayGroups(dayId: string, groups: readonly string[]) {
+      if (!['segunda', 'terca', 'quarta', 'quinta', 'sexta', 'sabado'].includes(dayId)) {
+        throw new Error('Escolha um dia de treino válido.');
+      }
+      const muscles = groups.map((name) => name.trim()).filter(Boolean);
+      if (!muscles.length) throw new Error('Informe pelo menos um grupo muscular.');
+      if (muscles.length > 12 || muscles.some((name) => name.length > 100)) {
+        throw new Error('Use até 12 grupos, com no máximo 100 caracteres em cada nome.');
+      }
+      await db.runAsync(`INSERT INTO workout_day_groups (day_id, muscles_json) VALUES (?, ?)
+        ON CONFLICT(day_id) DO UPDATE SET muscles_json=excluded.muscles_json`,
+      dayId, JSON.stringify(muscles));
+      return muscles;
+    },
     async load(dayId: string): Promise<LocalExercise[]> {
       const rows = await db.getAllAsync<Row>(
         'SELECT * FROM creator_exercises WHERE day_id = ? ORDER BY position, id', dayId);

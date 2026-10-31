@@ -1,3 +1,4 @@
+import { workoutColors } from '@/constants/workout-colors';
 import { useRef, useState } from 'react';
 import { ActivityIndicator, Alert, Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -42,7 +43,7 @@ export function CopyExerciseModal({ exercise, onClose }: { exercise: LocalExerci
               </Pressable>
             ))}
           </ScrollView>
-          {copying && <ActivityIndicator color="#B0F36D" accessibilityLabel="Copiando exercício" />}
+          {copying && <ActivityIndicator color={workoutColors.accent} accessibilityLabel="Copiando exercício" />}
           {!!error && <Text accessibilityLiveRegion="polite" style={local.error}>{error}</Text>}
           <Pressable accessibilityRole="button" disabled={copying} onPress={onClose} style={local.cancel}>
             <Text style={local.dayName}>Cancelar</Text>
@@ -55,12 +56,12 @@ export function CopyExerciseModal({ exercise, onClose }: { exercise: LocalExerci
 
 const local = StyleSheet.create({
   backdrop: { flex: 1, backgroundColor: '#000000B3', justifyContent: 'center', alignItems: 'center', padding: 20 },
-  panel: { width: '100%', maxWidth: 520, maxHeight: '90%', backgroundColor: '#171F1B', borderRadius: 24, padding: 20, gap: 14, borderWidth: 1, borderColor: '#34473A' },
-  title: { color: '#F4F7F3', fontSize: 22, fontWeight: '700' },
-  description: { color: '#A8B3AB', fontSize: 13, lineHeight: 20 },
+  panel: { width: '100%', maxWidth: 520, maxHeight: '90%', backgroundColor: workoutColors.surface, borderRadius: 24, padding: 20, gap: 14, borderWidth: 1, borderColor: workoutColors.border },
+  title: { color: workoutColors.text, fontSize: 22, fontWeight: '700' },
+  description: { color: workoutColors.textSecondary, fontSize: 13, lineHeight: 20 },
   list: { gap: 8 },
-  day: { borderWidth: 1, borderColor: '#34473A', borderRadius: 12, padding: 12, gap: 4, minHeight: 48 },
-  dayName: { color: '#B0F36D', fontSize: 15, fontWeight: '600' },
+  day: { borderWidth: 1, borderColor: workoutColors.border, borderRadius: 12, padding: 12, gap: 4, minHeight: 48 },
+  dayName: { color: workoutColors.accent, fontSize: 15, fontWeight: '600' },
   cancel: { alignItems: 'center', justifyContent: 'center', minHeight: 44 },
   error: { color: '#FFB4A8', fontSize: 14 },
   dimmed: { opacity: 0.5 },

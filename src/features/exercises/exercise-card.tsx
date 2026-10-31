@@ -1,3 +1,4 @@
+import { workoutColors } from '@/constants/workout-colors';
 import { useState } from 'react';
 import { Alert, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 
@@ -159,22 +160,22 @@ export function Action({ label, onPress, danger = false, disabled = false }: {
 }
 
 const local = StyleSheet.create({
-  card: { borderRadius: 18, backgroundColor: '#171F1B', borderWidth: 1, borderColor: '#2D3B31', overflow: 'hidden' },
+  card: { borderRadius: 18, backgroundColor: workoutColors.surface, borderWidth: 1, borderColor: workoutColors.border, overflow: 'hidden' },
   header: { flexDirection: 'row', alignItems: 'center', gap: 12, padding: 12, minHeight: 76 },
   heading: { flex: 1, gap: 6 },
-  name: { color: '#F4F7F3', fontSize: 16, fontWeight: '700' },
-  subtitle: { color: '#A8B3AB', fontSize: 12 },
+  name: { color: workoutColors.text, fontSize: 16, fontWeight: '700' },
+  subtitle: { color: workoutColors.textSecondary, fontSize: 12 },
   details: { padding: 12, paddingTop: 4, gap: 10 },
   toolbar: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   tool: { flex: 1 },
   action: { minHeight: 44, justifyContent: 'center', paddingVertical: 8, paddingHorizontal: 4 },
-  actionText: { color: '#B0F36D', fontSize: 13, fontWeight: '600' },
+  actionText: { color: workoutColors.accent, fontSize: 13, fontWeight: '600' },
   actions: { flexDirection: 'row', flexWrap: 'wrap', gap: 16 },
   edit: { gap: 8 },
-  nameInput: { backgroundColor: '#0C100F', borderRadius: 10, borderWidth: 1, borderColor: '#48613A', minHeight: 48, padding: 12, color: '#F4F7F3', fontSize: 16 },
+  nameInput: { backgroundColor: workoutColors.background, borderRadius: 10, borderWidth: 1, borderColor: workoutColors.borderStrong, minHeight: 48, padding: 12, color: workoutColors.text, fontSize: 16 },
   error: { color: '#FFB4A8' },
   labels: { flexDirection: 'row', justifyContent: 'space-around', gap: 8 },
-  series: { gap: 4, borderTopWidth: 1, borderTopColor: '#2D3B31', paddingTop: 6 },
-  seriesLabel: { color: '#A8B3AB', fontSize: 11 },
+  series: { gap: 4, borderTopWidth: 1, borderTopColor: workoutColors.border, paddingTop: 6 },
+  seriesLabel: { color: workoutColors.textSecondary, fontSize: 11 },
   controls: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
 });

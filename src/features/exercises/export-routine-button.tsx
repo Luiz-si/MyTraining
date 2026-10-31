@@ -1,3 +1,4 @@
+import { workoutColors } from '@/constants/workout-colors';
 import { useRef, useState } from 'react';
 import { Alert, Pressable, StyleSheet, Text } from 'react-native';
 
@@ -39,7 +40,7 @@ export function ExportRoutineButton() {
 }
 
 const local = StyleSheet.create({
-  button: { minHeight: 48, borderRadius: 14, borderWidth: 1, borderColor: '#34473A', justifyContent: 'center', alignItems: 'center', padding: 12 },
-  text: { color: '#B0F36D', fontSize: 15, fontWeight: '600' },
+  button: { minHeight: 48, borderRadius: 14, borderWidth: 1, borderColor: workoutColors.border, justifyContent: 'center', alignItems: 'center', padding: 12 },
+  text: { color: workoutColors.accent, fontSize: 15, fontWeight: '600' },
   pressed: { opacity: 0.7 },
 });

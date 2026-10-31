@@ -1,3 +1,4 @@
+import { workoutColors } from '@/constants/workout-colors';
 import { useAudioPlayer } from 'expo-audio';
 import { useEffect, useState } from 'react';
 import { Pressable, Text } from 'react-native';
@@ -7,10 +8,11 @@ export default function RestTimer() {
   const [seconds, setSeconds] = useState(180);
   const minutes = Math.floor(seconds / 60);
   const [running, setRunning] = useState(false);
+  const [endTime, setEndTime] = useState<number | null>(null);
   const remainingSeconds = seconds % 60;
   const displayTime = `${minutes}:${String(remainingSeconds).padStart(2, '0')}`;
     useEffect(() => {
-    if (!running) {
+    if (!running || endTime === null) {
       return;
     }
 
@@ -21,17 +23,18 @@ export default function RestTimer() {
     }
 
     const timeout = setTimeout(() => {
-      setSeconds((previous) => Math.max(0, previous - 1));
+      setSeconds(Math.max(0, Math.ceil((endTime - Date.now()) / 1000)));
     }, 1000);
 
     return () => clearTimeout(timeout);
-  }, [running, seconds, player]);
+  }, [running, seconds, player, endTime]);
 
 
   return (
     <Pressable
       onPress={() => {
         setSeconds(180);
+        setEndTime(Date.now() + 180 * 1000);
         setRunning(true);
         }}  
       style={{
@@ -43,7 +46,7 @@ export default function RestTimer() {
         justifyContent: 'center',
       }}
     >
-      <Text>{displayTime}</Text>
+      <Text style={{ color: workoutColors.onAccent, fontWeight: '700' }}>{displayTime}</Text>
     </Pressable>
   );
 }

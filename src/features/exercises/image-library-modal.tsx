@@ -1,3 +1,4 @@
+import { workoutColors } from '@/constants/workout-colors';
 import { useState } from 'react';
 import { FlatList, Image, KeyboardAvoidingView, Modal, Platform, Pressable, StyleSheet, Text, TextInput, useWindowDimensions, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -24,7 +25,7 @@ export function ImageLibraryModal({ initialId, onSelect, onClose }: {
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={local.keyboard}>
           <View style={local.panel} accessibilityViewIsModal>
             <Text accessibilityRole="header" style={local.title}>Biblioteca de imagens</Text>
-            <TextInput accessibilityLabel="Pesquisar imagem" placeholder="Pesquisar por nome…" placeholderTextColor="#A8B3AB"
+            <TextInput accessibilityLabel="Pesquisar imagem" placeholder="Pesquisar por nome…" placeholderTextColor={workoutColors.textSecondary}
               value={query} onChangeText={setQuery} style={local.input} autoCorrect={false} />
             <FlatList key={columns} data={filtered} numColumns={columns} keyExtractor={(image) => image.id}
               extraData={selectedId} keyboardShouldPersistTaps="handled" style={local.list}
@@ -58,21 +59,21 @@ export function ImageLibraryModal({ initialId, onSelect, onClose }: {
 const local = StyleSheet.create({
   backdrop: { flex: 1, backgroundColor: '#000000B3', padding: 16, justifyContent: 'center', alignItems: 'center' },
   keyboard: { width: '100%', maxWidth: 560, maxHeight: '90%' },
-  panel: { backgroundColor: '#171F1B', borderWidth: 1, borderColor: '#34473A', borderRadius: 24, padding: 16, gap: 12, flexShrink: 1 },
-  title: { color: '#F4F7F3', fontSize: 21, fontWeight: '700' },
-  input: { minHeight: 48, borderRadius: 12, backgroundColor: '#0C100F', color: '#F4F7F3', padding: 12, fontSize: 15 },
+  panel: { backgroundColor: workoutColors.surface, borderWidth: 1, borderColor: workoutColors.border, borderRadius: 24, padding: 16, gap: 12, flexShrink: 1 },
+  title: { color: workoutColors.text, fontSize: 21, fontWeight: '700' },
+  input: { minHeight: 48, borderRadius: 12, backgroundColor: workoutColors.background, color: workoutColors.text, padding: 12, fontSize: 15 },
   list: { flexGrow: 0, flexShrink: 1 },
   grid: { paddingVertical: 8, gap: 10 },
   row: { justifyContent: 'space-between' },
-  tile: { padding: 6, borderWidth: 2, borderColor: '#2D3B31', borderRadius: 14, alignItems: 'center', gap: 6 },
-  selected: { borderColor: '#B0F36D', backgroundColor: '#25351F' },
+  tile: { padding: 6, borderWidth: 2, borderColor: workoutColors.border, borderRadius: 14, alignItems: 'center', gap: 6 },
+  selected: { borderColor: workoutColors.accent, backgroundColor: workoutColors.selected },
   image: { width: 80, height: 80, borderRadius: 10 },
-  name: { color: '#F4F7F3', fontSize: 12, textAlign: 'center' },
-  description: { color: '#A8B3AB', fontSize: 14, lineHeight: 22, paddingVertical: 16 },
-  confirm: { backgroundColor: '#B0F36D', borderRadius: 12, minHeight: 48, alignItems: 'center', justifyContent: 'center', padding: 12 },
-  confirmText: { color: '#12200B', fontWeight: '700', textAlign: 'center' },
+  name: { color: workoutColors.text, fontSize: 12, textAlign: 'center' },
+  description: { color: workoutColors.textSecondary, fontSize: 14, lineHeight: 22, paddingVertical: 16 },
+  confirm: { backgroundColor: workoutColors.accent, borderRadius: 12, minHeight: 48, alignItems: 'center', justifyContent: 'center', padding: 12 },
+  confirmText: { color: workoutColors.onAccent, fontWeight: '700', textAlign: 'center' },
   disabled: { opacity: 0.4 },
   pressed: { opacity: 0.7 },
   cancel: { minHeight: 44, alignItems: 'center', justifyContent: 'center' },
-  cancelText: { color: '#B0F36D', fontSize: 15 },
+  cancelText: { color: workoutColors.accent, fontSize: 15 },
 });

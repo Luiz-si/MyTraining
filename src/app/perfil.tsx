@@ -1,3 +1,4 @@
+import { workoutColors } from '@/constants/workout-colors';
 import { router } from 'expo-router';
 import { Image, StyleSheet, Text, View } from 'react-native';
 
@@ -9,6 +10,7 @@ import { ExportRoutineButton } from '@/features/exercises/export-routine-button'
 export default function HomeScreen() {
   return (
     <Screen>
+      <Button label="Página principal" onPress={() => router.dismissTo('/')} secondary />
       <Text style={styles.brand}>Meu<Text style={styles.accent}>Treino</Text></Text>
       <View style={[styles.card, local.profile]}>
         <Text style={styles.eyebrow}>POR TRÁS DO MEUTREINO</Text>
@@ -43,10 +45,10 @@ export default function HomeScreen() {
 }
 
 const local = StyleSheet.create({
-  profile: { borderTopColor: '#B0F36D', gap: 22 },
-  photo: { width: 140, height: 140, borderRadius: 32, borderWidth: 1, borderColor: '#48613A' },
-  placeholder: { backgroundColor: '#25351F', alignItems: 'center', justifyContent: 'center', gap: 8 },
-  initial: { color: '#B0F36D', fontSize: 44, fontWeight: '800' },
-  photoLabel: { color: '#B0F36D', fontSize: 9, letterSpacing: 1 },
+  profile: { borderTopColor: workoutColors.accent, gap: 22 },
+  photo: { width: 140, height: 140, borderRadius: 32, borderWidth: 1, borderColor: workoutColors.borderStrong },
+  placeholder: { backgroundColor: workoutColors.selected, alignItems: 'center', justifyContent: 'center', gap: 8 },
+  initial: { color: workoutColors.accent, fontSize: 44, fontWeight: '800' },
+  photoLabel: { color: workoutColors.accent, fontSize: 9, letterSpacing: 1 },
   identity: { gap: 12 },
 });

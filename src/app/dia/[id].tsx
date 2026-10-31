@@ -3,12 +3,13 @@ import { Text, View } from 'react-native';
 
 import RestTimer from '@/components/rest-timer';
 import { Button, Screen, styles } from '@/components/workout-screen';
-import { weeklySplit } from '@/data/workouts';
 import { DayExercises } from '@/features/exercises/day-exercises';
+import { useWeeklySplit } from '@/features/workouts/use-weekly-split';
 
 export default function DayScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
-  const day = weeklySplit.find((item) => item.id === id);
+  const { days } = useWeeklySplit();
+  const day = days.find((item) => item.id === id);
   const backButton = <Button label=" Voltar à divisão semanal" onPress={() => router.dismissTo('/treino')} secondary />;
 
   if (!day) {

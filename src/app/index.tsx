@@ -1,3 +1,4 @@
+import { workoutColors } from '@/constants/workout-colors';
 import { router } from 'expo-router';
 import { StyleSheet, Text, View } from 'react-native';
 
@@ -30,9 +31,9 @@ export default function HomeScreen() {
 const local = StyleSheet.create({
   content: { flex: 1, justifyContent: 'center', gap: 16, paddingVertical: 32 },
   titleBlock: { gap: 24 },
-  line: { width: 48, height: 5, borderRadius: 3, backgroundColor: '#B0F36D' },
-  title: { fontSize: 36, fontWeight: '900', letterSpacing: -1.5, color: '#F4F7F3' },
-  creator: { color: '#B0F36D', fontSize: 14, fontWeight: '600' },
-  presentation: { marginTop: 12, marginBottom: 20, borderLeftWidth: 2, borderLeftColor: '#34473A', paddingLeft: 16 },
+  line: { width: 48, height: 5, borderRadius: 3, backgroundColor: workoutColors.accent },
+  title: { fontSize: 36, fontWeight: '900', letterSpacing: -1.5, color: workoutColors.text },
+  creator: { color: workoutColors.accent, fontSize: 14, fontWeight: '600' },
+  presentation: { marginTop: 12, marginBottom: 20, borderLeftWidth: 2, borderLeftColor: workoutColors.border, paddingLeft: 16 },
   actions: { gap: 14 },
 });

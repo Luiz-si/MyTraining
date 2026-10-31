@@ -4,7 +4,7 @@
     "slug": "MeuTreinoNovo",
     "version": "1.0.1",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/meutreino-icon.png",
     "scheme": "meutreinonovo",
     "userInterfaceStyle": "automatic",
     "ios": {
@@ -13,12 +13,7 @@
     "android": {
       "package": "com.luiznpa.meutreino",
       "versionCode": 2,
-      "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
-        "foregroundImage": "./assets/images/android-icon-foreground.png",
-        "backgroundImage": "./assets/images/android-icon-background.png",
-        "monochromeImage": "./assets/images/android-icon-monochrome.png"
-      },
+      "icon": "./assets/images/meutreino-icon.png",
       "predictiveBackGestureEnabled": false,
       "permissions": [
         "android.permission.MODIFY_AUDIO_SETTINGS",
@@ -52,7 +47,17 @@
       ],
       "expo-audio",
       "expo-image",
-      "expo-sharing"
+      "expo-sharing",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "enableMinifyInReleaseBuilds": true,
+            "enableShrinkResourcesInReleaseBuilds": true,
+            "enableBundleCompression": true
+          }
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true,

@@ -1,3 +1,4 @@
+import { workoutColors } from '@/constants/workout-colors';
 import { useEffect, useRef, useState } from 'react';
 import { AccessibilityInfo, ActivityIndicator, Alert, LayoutAnimation, StyleSheet, Text, TextInput, View } from 'react-native';
 
@@ -108,7 +109,7 @@ export function DayExercises({ dayId }: { dayId: string }) {
 
   return (
     <View style={local.list}>
-      {!state.loaded && !state.loadError && <ActivityIndicator color="#B0F36D" accessibilityLabel="Carregando exercícios" />}
+      {!state.loaded && !state.loadError && <ActivityIndicator color={workoutColors.accent} accessibilityLabel="Carregando exercícios" />}
       {state.loadError && (
         <View style={styles.card}>
           <Text style={styles.description}>Não foi possível ler os exercícios. Seus dados não foram alterados.</Text>
@@ -132,7 +133,7 @@ export function DayExercises({ dayId }: { dayId: string }) {
               <Action label={picking ? 'Abrindo galeria…' : 'Escolher da galeria'} onPress={() => { void selectGallery(); }} disabled={picking} />
               {!ready && <Action label="Continuar sem imagem" onPress={() => setReady(true)} disabled={picking} />}
               {ready && <>
-              <TextInput accessibilityLabel="Nome do novo exercício" placeholder="Nome do exercício" placeholderTextColor="#A8B3AB"
+              <TextInput accessibilityLabel="Nome do novo exercício" placeholder="Nome do exercício" placeholderTextColor={workoutColors.textSecondary}
                 maxLength={100} value={name} onChangeText={setName} style={local.input}
                 returnKeyType="done" editable={!picking} onSubmitEditing={() => { if (!picking) create(); }} />
               {nameError && <Text style={local.error}>Digite um nome para o exercício.</Text>}
@@ -154,7 +155,7 @@ export function DayExercises({ dayId }: { dayId: string }) {
 
 const local = StyleSheet.create({
   list: { gap: 12 },
-  status: { color: '#A8B3AB', fontSize: 12 },
-  input: { minHeight: 48, color: '#F4F7F3', borderWidth: 1, borderColor: '#48613A', borderRadius: 12, padding: 12, backgroundColor: '#0C100F', fontSize: 16 },
+  status: { color: workoutColors.textSecondary, fontSize: 12 },
+  input: { minHeight: 48, color: workoutColors.text, borderWidth: 1, borderColor: workoutColors.borderStrong, borderRadius: 12, padding: 12, backgroundColor: workoutColors.background, fontSize: 16 },
   error: { color: '#FFB4A8' },
 });
