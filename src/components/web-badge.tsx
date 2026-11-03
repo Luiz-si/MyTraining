@@ -1,3 +1,9 @@
+/**
+ * SELO EXPO DA TELA DE EXEMPLO
+ * Exibe a identificação do Expo no conteúdo de exemplo.
+ * Guia de localização: docs/onde-mexer-no-codigo.md
+ */
+
 import { version } from 'expo/package.json';
 import { Image } from 'expo-image';
 import { useColorScheme, StyleSheet } from 'react-native';

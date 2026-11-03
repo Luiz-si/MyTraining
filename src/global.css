@@ -1,3 +1,10 @@
+/**
+ * FONTES DA VERSÃO WEB
+ * Variáveis CSS de fonte usadas pelo tema do modelo inicial.
+ * A aparência das telas Android é definida nos StyleSheet dos arquivos TypeScript.
+ * Guia de localização: docs/onde-mexer-no-codigo.md
+ */
+
 :root {
   --font-display:
     Spline Sans, Inter, ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji,

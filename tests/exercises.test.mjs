@@ -1,3 +1,10 @@
+/**
+ * TESTES DOS DADOS DOS TREINOS
+ * Verifica persistência SQLite, séries, cópia, sincronização e grupos musculares.
+ * Não é código de uma tela e não altera o banco do celular.
+ * Guia de localização: docs/onde-mexer-no-codigo.md
+ */
+
 import assert from 'node:assert/strict';
 import { mkdtemp, readFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
@@ -5,10 +12,10 @@ import { join } from 'node:path';
 import { DatabaseSync } from 'node:sqlite';
 import test from 'node:test';
 
-import { createExerciseCopy, emptySets, parseRepetitions, parseWeight, stepWeight, validateExercise } from '../src/features/exercises/model.ts';
-import { createRepository, initializeDatabase } from '../src/features/exercises/repository.ts';
-import { applySetChanges, exerciseKey } from '../src/features/exercises/repository.ts';
-import { createWriteQueue } from '../src/features/exercises/write-queue.ts';
+import { createExerciseCopy, emptySets, parseRepetitions, parseWeight, stepWeight, validateExercise } from '../src/features/exercicios/tipos-e-validacao.ts';
+import { createRepository, initializeDatabase } from '../src/features/exercicios/consultas-banco.ts';
+import { applySetChanges, exerciseKey } from '../src/features/exercicios/consultas-banco.ts';
+import { createWriteQueue } from '../src/features/exercicios/fila-salvamento.ts';
 
 function connect(path) {
   const native = new DatabaseSync(path);

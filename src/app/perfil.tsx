@@ -1,17 +1,27 @@
-import { workoutColors } from '@/constants/workout-colors';
+/**
+ * TELA DO PERFIL DO CRIADOR
+ * Onde aparece: Meu perfil e meus treinos.
+ * Edite aqui: posição da foto, nome, botão Minha proposta e acesso aos treinos.
+ * Nome e imagem vêm de src/data/perfil-criador.ts; a aparência está em local, no fim.
+ * Guia de localização: docs/onde-mexer-no-codigo.md
+ */
+
+import { workoutColors } from '@/constants/cores-app';
 import { router } from 'expo-router';
 import { Image, StyleSheet, Text, View } from 'react-native';
 
-import { Button, Screen, styles } from '@/components/workout-screen';
-import { creator } from '@/data/creator';
-import { weeklySplit } from '@/data/workouts';
-import { ExportRoutineButton } from '@/features/exercises/export-routine-button';
+import { Button, Screen, styles } from '@/components/tela-base';
+import { creator } from '@/data/perfil-criador';
+import { weeklySplit } from '@/data/divisao-semanal';
+import { AboutEntry } from '@/features/minha-proposta/botao-minha-proposta';
+import { ExportRoutineButton } from '@/features/exercicios/botao-exportar-rotina';
 
 export default function HomeScreen() {
   return (
     <Screen>
       <Button label="Página principal" onPress={() => router.dismissTo('/')} secondary />
       <Text style={styles.brand}>Meu<Text style={styles.accent}>Treino</Text></Text>
+      {/* PERFIL: foto, identificação do criador e botão Minha proposta. */}
       <View style={[styles.card, local.profile]}>
         <Text style={styles.eyebrow}>POR TRÁS DO MEUTREINO</Text>
         {creator.photo ? (
@@ -26,8 +36,10 @@ export default function HomeScreen() {
           <Text style={styles.eyebrow}>Criador do MeuTreino</Text>
           <Text accessibilityRole="header" style={styles.hero}>{creator.name}</Text>
           <Text style={styles.description}>{creator.description}</Text>
+          <AboutEntry />
         </View>
       </View>
+      {/* ROTINA: apresentação da semana, quantidades e botão para abrir os dias. */}
       <View style={styles.intro}>
         <Text style={styles.eyebrow}>MINHA ROTINA</Text>
         <Text accessibilityRole="header" style={styles.title}>Uma semana de dedicação.</Text>
@@ -44,6 +56,7 @@ export default function HomeScreen() {
   );
 }
 
+// APARÊNCIA SÓ DESTA TELA: tamanho da foto, bordas e espaço entre os dados do perfil.
 const local = StyleSheet.create({
   profile: { borderTopColor: workoutColors.accent, gap: 22 },
   photo: { width: 140, height: 140, borderRadius: 32, borderWidth: 1, borderColor: workoutColors.borderStrong },

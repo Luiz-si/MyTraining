@@ -1,3 +1,10 @@
+/**
+ * TRADUÇÃO DOS NOMES DAS IMAGENS DE EXERCÍCIOS
+ * Edite aqui para acrescentar traduções dos nomes de arquivos.
+ * As categorias e os termos da pesquisa ficam em src/features/exercicios/pesquisa-imagens.ts.
+ * Guia de localização: docs/onde-mexer-no-codigo.md
+ */
+
 // Vocabulário local: não envia nomes ou imagens para serviços de tradução.
 const names = Object.fromEntries(`
 rosca direta no cross over|Rosca direta na polia (crossover)

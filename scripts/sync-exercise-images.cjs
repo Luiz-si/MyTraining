@@ -1,3 +1,11 @@
+/**
+ * GERADOR DO CATÁLOGO DE IMAGENS
+ * Executado por npm run images:sync.
+ * Lê assets/images/exercicios e atualiza data/exercise-images.generated.ts.
+ * Edite o gerador, não o catálogo automático, quando mudar esse comportamento.
+ * Guia de localização: docs/onde-mexer-no-codigo.md
+ */
+
 const fs = require('node:fs');
 const path = require('node:path');
 const { displayName } = require('./exercise-names-pt.cjs');

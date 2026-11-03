@@ -1,3 +1,10 @@
+/**
+ * TELA DE EXEMPLO DO MODELO EXPO
+ * Arquivo herdado do projeto inicial; não é a página Minha proposta.
+ * O fluxo principal do MeuTreino usa index.tsx, perfil.tsx e treino.tsx.
+ * Guia de localização: docs/onde-mexer-no-codigo.md
+ */
+
 import { Image } from 'expo-image';
 import { SymbolView } from 'expo-symbols';
 import { Platform, Pressable, ScrollView, StyleSheet } from 'react-native';

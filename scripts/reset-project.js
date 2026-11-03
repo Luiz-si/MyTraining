@@ -1,4 +1,11 @@
 #!/usr/bin/env node
+/**
+ * FERRAMENTA DE REINÍCIO DO MODELO EXPO
+ * Move o código atual para uma pasta de exemplo e prepara um projeto inicial.
+ * Não é necessária para executar, atualizar ou testar o MeuTreino.
+ * Guia de localização: docs/onde-mexer-no-codigo.md
+ */
+
 
 /**
  * This script is used to reset the project to a blank state.

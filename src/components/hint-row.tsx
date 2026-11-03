@@ -1,3 +1,9 @@
+/**
+ * LINHA DE DICA DA TELA DE EXEMPLO
+ * Mostra uma indicação de arquivo para editar no modelo inicial do Expo.
+ * Guia de localização: docs/onde-mexer-no-codigo.md
+ */
+
 import type { ReactNode } from 'react';
 import { View, StyleSheet } from 'react-native';
 

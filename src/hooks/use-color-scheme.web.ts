@@ -1,3 +1,10 @@
+/**
+ * PREFERÊNCIA DE TEMA NA VERSÃO WEB
+ * Adapta o tema ao navegador sem divergência na primeira renderização.
+ * O sufixo .web faz este arquivo ser escolhido ao executar na web.
+ * Guia de localização: docs/onde-mexer-no-codigo.md
+ */
+
 import { useSyncExternalStore } from 'react';
 import { useColorScheme as useRNColorScheme } from 'react-native';
 

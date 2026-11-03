@@ -1,3 +1,10 @@
+/**
+ * ÍCONE ANIMADO DO MODELO INICIAL EXPO
+ * Mantido como exemplo; não é o ícone instalado no celular.
+ * O ícone do MeuTreino é configurado no app.json.
+ * Guia de localização: docs/onde-mexer-no-codigo.md
+ */
+
 import { Image } from 'expo-image';
 import * as SplashScreen from 'expo-splash-screen';
 import { useState } from 'react';

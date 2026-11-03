@@ -1,12 +1,20 @@
+/**
+ * TELA MINHA DIVISÃO SEMANAL
+ * Desenha os cartões dos dias e o formulário para editar os grupos musculares.
+ * Edite aqui: posição do formulário, campo de texto e botões Salvar/Cancelar.
+ * A gravação dos grupos fica em features/divisao-semanal/use-divisao-semanal.ts.
+ * Guia de localização: docs/onde-mexer-no-codigo.md
+ */
+
 import { router } from 'expo-router';
 import { useRef, useState } from 'react';
 import { ActivityIndicator, Keyboard, StyleSheet, Text, TextInput, View } from 'react-native';
 
-import { WorkoutDayCard } from '@/components/workout-day-card';
-import { Button, Screen, styles } from '@/components/workout-screen';
-import { workoutColors } from '@/constants/workout-colors';
-import { restDay } from '@/data/workouts';
-import { loadWeeklySplit, saveDayMuscles, useWeeklySplit } from '@/features/workouts/use-weekly-split';
+import { WorkoutDayCard } from '@/components/cartao-dia-treino';
+import { Button, Screen, styles } from '@/components/tela-base';
+import { workoutColors } from '@/constants/cores-app';
+import { restDay } from '@/data/divisao-semanal';
+import { loadWeeklySplit, saveDayMuscles, useWeeklySplit } from '@/features/divisao-semanal/use-divisao-semanal';
 
 export default function WeeklySplitScreen() {
   const { days, loaded, error: loadError } = useWeeklySplit();
@@ -16,6 +24,7 @@ export default function WeeklySplitScreen() {
   const [saving, setSaving] = useState(false);
   const busy = useRef(false);
 
+  // SALVAR: espera a gravação no banco antes de fechar o formulário do dia escolhido.
   async function saveMuscles() {
     if (editingDayId === null || busy.current) return;
     busy.current = true;
@@ -50,6 +59,7 @@ export default function WeeklySplitScreen() {
         </View>
       )}
 
+      {/* CARTÕES: map cria uma cópia do cartão para cada dia da lista. */}
       {days.map((day, index) => (
         <View key={day.id} style={local.day}>
           <WorkoutDayCard
@@ -64,6 +74,7 @@ export default function WeeklySplitScreen() {
             }}
           />
 
+          {/* EDIÇÃO: este formulário aparece somente no cartão do dia selecionado. */}
           {editingDayId === day.id && (
             <View style={styles.card}>
               <Text style={styles.sectionTitle}>Editar grupos de {day.name}</Text>

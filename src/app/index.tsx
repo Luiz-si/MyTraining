@@ -1,9 +1,17 @@
-import { workoutColors } from '@/constants/workout-colors';
+/**
+ * TELA INICIAL
+ * Onde aparece: primeira tela ao abrir o MeuTreino.
+ * Edite aqui: boas-vindas e botões para o perfil e para a rotina própria.
+ * O nome index.tsx é uma convenção do Expo Router: mantenha-o.
+ * Guia de localização: docs/onde-mexer-no-codigo.md
+ */
+
+import { workoutColors } from '@/constants/cores-app';
 import { router } from 'expo-router';
 import { StyleSheet, Text, View } from 'react-native';
 
-import { HomeEntrance } from '@/components/home-entrance';
-import { Button, Screen, styles } from '@/components/workout-screen';
+import { HomeEntrance } from '@/components/animacao-inicial';
+import { Button, Screen, styles } from '@/components/tela-base';
 
 export default function HomeScreen() {
   return (

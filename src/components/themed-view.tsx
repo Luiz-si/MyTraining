@@ -1,3 +1,9 @@
+/**
+ * CONTÊINER COM TEMA DO MODELO EXPO
+ * Usado pelos componentes de exemplo para aplicar cores claras ou escuras.
+ * Guia de localização: docs/onde-mexer-no-codigo.md
+ */
+
 import { View, type ViewProps } from 'react-native';
 
 import { ThemeColor } from '@/constants/theme';

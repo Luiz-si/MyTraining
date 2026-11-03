@@ -1,3 +1,10 @@
+/**
+ * TEXTO COM TEMA DO MODELO EXPO
+ * Componente utilizado pelos exemplos, com variações de tipografia.
+ * Textos principais do MeuTreino usam os estilos de components/tela-base.tsx.
+ * Guia de localização: docs/onde-mexer-no-codigo.md
+ */
+
 import { Platform, StyleSheet, Text, type TextProps } from 'react-native';
 
 import { Fonts, ThemeColor } from '@/constants/theme';

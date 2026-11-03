@@ -1,3 +1,10 @@
+/**
+ * LINK PARA ABRIR UM SITE EXTERNO
+ * Utilitário usado pelos exemplos do Expo.
+ * Não é responsável por navegar entre os dias de treino.
+ * Guia de localização: docs/onde-mexer-no-codigo.md
+ */
+
 import { Href, Link } from 'expo-router';
 import { openBrowserAsync, WebBrowserPresentationStyle } from 'expo-web-browser';
 import { type ComponentProps } from 'react';

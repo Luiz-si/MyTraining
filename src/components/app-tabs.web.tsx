@@ -1,3 +1,10 @@
+/**
+ * ABAS WEB DO MODELO INICIAL EXPO
+ * Versão de navegador do componente app-tabs.
+ * Não controla os botões de navegação atuais do MeuTreino.
+ * Guia de localização: docs/onde-mexer-no-codigo.md
+ */
+
 import {
   TabList,
   TabListProps,

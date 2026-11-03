@@ -1,3 +1,10 @@
+/**
+ * ABAS DO MODELO INICIAL EXPO
+ * Define abas nativas Home/Explore do exemplo.
+ * A navegação atual do MeuTreino está em src/app/_layout.tsx e não usa este componente.
+ * Guia de localização: docs/onde-mexer-no-codigo.md
+ */
+
 import { NativeTabs } from 'expo-router/native-tabs';
 import { useColorScheme } from 'react-native';
 

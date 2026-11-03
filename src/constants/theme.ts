@@ -1,4 +1,11 @@
 /**
+ * TEMA DO MODELO DE EXEMPLO EXPO
+ * Usado pelos componentes de exemplo e pela rota explore.
+ * Para mudar as cores principais do MeuTreino, edite constants/cores-app.ts.
+ * Guia de localização: docs/onde-mexer-no-codigo.md
+ */
+
+/**
  * Below are the colors that are used in the app. The colors are defined in the light and dark mode.
  * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://unistyl.es/), etc.
  */

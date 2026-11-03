@@ -2,7 +2,7 @@
   "expo": {
     "name": "MeuTreino",
     "slug": "MeuTreinoNovo",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./assets/images/meutreino-icon.png",
     "scheme": "meutreinonovo",
@@ -12,7 +12,7 @@
     },
     "android": {
       "package": "com.luiznpa.meutreino",
-      "versionCode": 2,
+      "versionCode": 3,
       "icon": "./assets/images/meutreino-icon.png",
       "predictiveBackGestureEnabled": false,
       "permissions": [
@@ -28,6 +28,7 @@
     },
     "plugins": [
       "expo-router",
+      "expo-asset",
       [
         "expo-splash-screen",
         {

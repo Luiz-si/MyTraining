@@ -1,3 +1,10 @@
+/**
+ * PERGUNTA EXPANSÍVEL DO MODELO EXPO
+ * Usada pela tela explore, não pela página Minha proposta.
+ * As perguntas do MeuTreino ficam em features/minha-proposta/pergunta-expansivel.tsx.
+ * Guia de localização: docs/onde-mexer-no-codigo.md
+ */
+
 import { SymbolView } from 'expo-symbols';
 import { PropsWithChildren, useState } from 'react';
 import { Pressable, StyleSheet } from 'react-native';

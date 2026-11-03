@@ -1,3 +1,9 @@
+/**
+ * TESTES DO CATÁLOGO E DA PESQUISA DE IMAGENS
+ * Verifica geração do catálogo, tradução e termos usados para encontrar exercícios.
+ * Guia de localização: docs/onde-mexer-no-codigo.md
+ */
+
 import assert from 'node:assert/strict';
 import { copyFileSync, mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -6,7 +12,7 @@ import test from 'node:test';
 
 import generator from '../scripts/sync-exercise-images.cjs';
 import translations from '../scripts/exercise-names-pt.cjs';
-import { filterLibrary } from '../src/features/exercises/library-search.ts';
+import { filterLibrary } from '../src/features/exercicios/pesquisa-imagens.ts';
 
 test('catálogo vazio válido, formatos, ordem, nomes, referências estáticas e arquivos intactos', () => {
   const root = mkdtempSync(join(tmpdir(), 'meutreino-catalog-'));

@@ -1,3 +1,10 @@
+/**
+ * ÍCONE ANIMADO WEB DO MODELO EXPO
+ * Versão para navegador do componente de exemplo.
+ * Não controla o ícone Android do aplicativo.
+ * Guia de localização: docs/onde-mexer-no-codigo.md
+ */
+
 import { Image } from 'expo-image';
 import { StyleSheet, View } from 'react-native';
 import Animated, { Keyframe, Easing } from 'react-native-reanimated';

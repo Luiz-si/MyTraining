@@ -1,4 +1,11 @@
 /**
+ * CONSULTA O TEMA DOS COMPONENTES DE EXEMPLO
+ * Escolhe as cores claras/escuras definidas em constants/theme.ts.
+ * Não define a paleta principal do MeuTreino.
+ * Guia de localização: docs/onde-mexer-no-codigo.md
+ */
+
+/**
  * Learn more about light and dark modes:
  * https://docs.expo.dev/guides/color-schemes/
  */

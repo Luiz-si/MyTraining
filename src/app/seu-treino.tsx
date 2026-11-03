@@ -1,7 +1,14 @@
+/**
+ * TELA SEU PRÓPRIO TREINO
+ * Área reservada para a futura criação de uma rotina própria.
+ * Atualmente mostra uma apresentação e permite voltar à página principal.
+ * Guia de localização: docs/onde-mexer-no-codigo.md
+ */
+
 import { router } from 'expo-router';
 import { Text, View } from 'react-native';
 
-import { Button, Screen, styles } from '@/components/workout-screen';
+import { Button, Screen, styles } from '@/components/tela-base';
 
 export default function PersonalWorkoutScreen() {
   return (
