@@ -6,20 +6,23 @@
  * Guia de localização: docs/onde-mexer-no-codigo.md
  */
 
-export type ExerciseSet = { weight: string; repetitions: number };
-export type FourSets = [ExerciseSet, ExerciseSet, ExerciseSet, ExerciseSet];
+// null significa "ainda não preenchido". Zero continua sendo um valor explícito válido.
+export type ExerciseSet = { weight: string | null; repetitions: number | null };
+// Nome antigo preservado por compatibilidade; rotinas pessoais aceitam 1 a 12 séries.
+export type FourSets = ExerciseSet[];
 export type LocalExercise = {
   id: string;
   dayId: string;
   name: string;
   imageFile: string | null;
   libraryImageId?: string | null;
+  recommendationId?: string | null;
   position: number;
   sets: FourSets;
 };
 
-export function emptySets(): FourSets {
-  return Array.from({ length: 4 }, () => ({ weight: '0', repetitions: 0 })) as FourSets;
+export function emptySets(unfilled = false): FourSets {
+  return Array.from({ length: 4 }, () => ({ weight: unfilled ? null : '0', repetitions: unfilled ? null : 0 }));
 }
 
 export function createExerciseCopy(source: LocalExercise, id: string, dayId: string, position: number,
@@ -38,7 +41,8 @@ export function parseWeight(input: string): string | null {
   return decimal ? `${integer}.${decimal}` : integer;
 }
 
-export function stepWeight(weight: string, delta: 1 | -1): string {
+export function stepWeight(weight: string | null, delta: 1 | -1): string | null {
+  if (weight === null) return delta > 0 ? '1' : null;
   const normalized = parseWeight(weight);
   if (normalized === null) throw new Error('Carga inválida');
   const [whole, fraction = ''] = normalized.split('.');
@@ -56,13 +60,20 @@ export function parseRepetitions(input: string): number | null {
   return Number.isSafeInteger(number) && number >= 0 ? number : null;
 }
 
+export function stepRepetitions(value: number | null, delta: 1 | -1): number | null {
+  if (value === null) return delta > 0 ? 1 : null;
+  return Math.min(Number.MAX_SAFE_INTEGER, Math.max(0, value + delta));
+}
+
 export function validateExercise(exercise: LocalExercise) {
+  const personal = exercise.dayId.startsWith('personal:');
   if (!exercise.id || !exercise.dayId || !exercise.name.trim() || exercise.name.length > 100 ||
     (exercise.libraryImageId != null && (typeof exercise.libraryImageId !== 'string' || !exercise.libraryImageId || exercise.imageFile !== null)) ||
     (exercise.imageFile !== null && !/^[\w.-]+$/.test(exercise.imageFile)) ||
-    !Number.isSafeInteger(exercise.position) || exercise.position < 0 || exercise.sets.length !== 4 ||
-    !exercise.sets.every((set) => typeof set.weight === 'string' && parseWeight(set.weight) !== null &&
-      Number.isSafeInteger(set.repetitions) && set.repetitions >= 0)) {
+    !Number.isSafeInteger(exercise.position) || exercise.position < 0 ||
+    (exercise.dayId.startsWith('personal:') ? exercise.sets.length < 1 || exercise.sets.length > 12 : exercise.sets.length !== 4) ||
+    !exercise.sets.every((set) => (personal && set.weight === null || typeof set.weight === 'string' && parseWeight(set.weight) !== null) &&
+      (personal && set.repetitions === null || typeof set.repetitions === 'number' && Number.isSafeInteger(set.repetitions) && set.repetitions >= 0))) {
     throw new Error('Dados do exercício inválidos');
   }
 }

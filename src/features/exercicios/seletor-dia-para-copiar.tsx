@@ -11,6 +11,8 @@ import { ActivityIndicator, Alert, Modal, Pressable, ScrollView, StyleSheet, Tex
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { weeklySplit } from '@/data/divisao-semanal';
+import { useRoutines } from '@/features/rotinas/estado-rotinas';
+import { weekNames } from '@/data/modelos-rotinas';
 
 import type { LocalExercise } from './tipos-e-validacao';
 import { copyExercise } from './estado-exercicios';
@@ -19,6 +21,11 @@ export function CopyExerciseModal({ exercise, onClose }: { exercise: LocalExerci
   const [copying, setCopying] = useState(false);
   const [error, setError] = useState('');
   const busy = useRef(false);
+  const { routines } = useRoutines();
+  const availableDays = exercise.dayId.startsWith('personal:')
+    ? (routines.find((routine) => routine.days.some((day) => day.id === exercise.dayId))?.days ?? [])
+      .filter((day) => !day.rest).map((day) => ({ ...day, name: `${weekNames[day.weekday]} · ${day.name}` }))
+    : weeklySplit;
 
   async function selectDay(dayId: string, dayName: string) {
     if (busy.current) return;
@@ -39,9 +46,9 @@ export function CopyExerciseModal({ exercise, onClose }: { exercise: LocalExerci
       <SafeAreaView style={local.backdrop}>
         <View style={local.panel} accessibilityViewIsModal>
           <Text accessibilityRole="header" style={local.title}>Copiar exercício</Text>
-          <Text style={local.description}>Escolha o dia que receberá {exercise.name}, com a imagem e as quatro séries.</Text>
+          <Text style={local.description}>Escolha outro dia desta rotina para receber {exercise.name}, com a imagem e as séries.</Text>
           <ScrollView contentContainerStyle={local.list}>
-            {weeklySplit.filter((day) => day.id !== exercise.dayId).map((day) => (
+            {availableDays.filter((day) => day.id !== exercise.dayId).map((day) => (
               <Pressable key={day.id} disabled={copying} accessibilityRole="button" accessibilityLabel={`Copiar para ${day.name}`}
                 onPress={() => { void selectDay(day.id, day.name); }}
                 style={({ pressed }) => [local.day, (pressed || copying) && local.dimmed]}>
@@ -49,6 +56,7 @@ export function CopyExerciseModal({ exercise, onClose }: { exercise: LocalExerci
                 <Text style={local.description}>{day.muscles.join(' · ')}</Text>
               </Pressable>
             ))}
+            {!availableDays.some((day) => day.id !== exercise.dayId) && <Text style={local.description}>Ative outro dia de treino nesta rotina para poder copiar.</Text>}
           </ScrollView>
           {copying && <ActivityIndicator color={workoutColors.accent} accessibilityLabel="Copiando exercício" />}
           {!!error && <Text accessibilityLiveRegion="polite" style={local.error}>{error}</Text>}

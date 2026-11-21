@@ -27,6 +27,9 @@ export default function RootLayout() {
         <Stack.Screen name="perfil" />
         <Stack.Screen name="sobre-meutreino" />
         <Stack.Screen name="seu-treino" />
+        {/* Rotinas pessoais: o id da rotina e o dia viajam nos parâmetros da rota. */}
+        <Stack.Screen name="rotina/[id]" />
+        <Stack.Screen name="rotina/[id]/dia/[diaId]" />
         <Stack.Screen name="treino" />
         <Stack.Screen name="dia/[id]" />
       </Stack>

@@ -10,19 +10,32 @@ import { openDatabaseAsync } from 'expo-sqlite';
 
 import { createRepository, initializeDatabase } from './consultas-banco';
 import { getInitialRoutine } from './carregar-rotina-inicial';
+import { createRoutineRepository, initializeRoutines } from '../rotinas/consultas-rotinas';
+import { createDatabaseQueue, serializedRepository } from '../rotinas/fila-banco';
+import { routineModels } from '@/data/modelos-rotinas';
 
-let repository: Promise<ReturnType<typeof createRepository>> | undefined;
+let connection: Promise<{
+  exercises: ReturnType<typeof createRepository>;
+  routines: ReturnType<typeof createRoutineRepository>;
+}> | undefined;
 
-export function getRepository() {
-  repository ??= (async () => {
+function getConnection() {
+  connection ??= (async () => {
     const db = await openDatabaseAsync('meutreino.db');
     await initializeDatabase(db);
     const result = createRepository(db);
     await result.seedIfEmpty(getInitialRoutine());
-    return result;
+    await initializeRoutines(db);
+    const routines = createRoutineRepository(db);
+    await routines.seedOnce(routineModels.find((model) => model.id === 'upper-lower')!);
+    const run = createDatabaseQueue();
+    return { exercises: serializedRepository(result, run), routines: serializedRepository(routines, run) };
   })().catch((error) => {
-    repository = undefined;
+    connection = undefined;
     throw error;
   });
-  return repository;
+  return connection;
 }
+
+export async function getRepository() { return (await getConnection()).exercises; }
+export async function getRoutineRepository() { return (await getConnection()).routines; }

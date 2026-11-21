@@ -8,16 +8,19 @@
 
 Aplicativo desenvolvido por Luiz Pedro para registrar e acompanhar sua rotina pessoal de musculação. O MeuTreino reúne divisão semanal, exercícios com imagens, cargas, repetições e descanso em uma interface escura com detalhes em verde.
 
-O projeto também faz parte do meu aprendizado em programação e Sistemas de Informação. A proposta inicial é apresentar a rotina do criador; a área para montar uma rotina própria ainda está em desenvolvimento.
+O projeto também faz parte do meu aprendizado em programação e Sistemas de Informação. Além da rotina do criador, a área **Seu próprio treino** permite organizar rotinas pessoais independentes. Veja o [guia de funcionamento das rotinas](docs/como-funciona-meu-treino.md).
 
 ## Funcionalidades disponíveis
 
 - **Divisão semanal:** seis dias de treino e domingo reservado ao descanso.
+- **Rotinas pessoais:** múltiplas rotinas, modelos editáveis, criação do zero, cartões com bordas verdes, duplicação e exclusão com confirmação.
+- **Dias personalizados:** nome da sessão, grupos musculares e descanso editáveis de segunda a domingo.
+- **Exercícios sugeridos:** prévia com imagens nos sete modelos de treino; escolha criar com sugestões ou somente a divisão. Cargas e repetições pessoais começam vazias e são preenchidas pelo usuário.
 - **Grupos musculares editáveis:** alteração por dia, salva no celular e exibida também dentro do treino.
 - **Exercícios:** cadastro, edição do nome, exclusão e cópia para outro dia.
 - **Biblioteca local de imagens:** pesquisa por nomes em português e termos relacionados, com opção de escolher uma imagem do celular.
-- **Controle de séries:** quatro séries por exercício, com carga e repetições editáveis.
-- **Cargas entre dias:** exercícios com o mesmo nome compartilham alterações de cargas e repetições.
+- **Controle de séries:** quatro séries no criador; de uma a doze nas rotinas pessoais, com carga, repetições e ordem editáveis.
+- **Cargas entre dias:** exercícios com o mesmo nome compartilham alterações de cargas e repetições somente dentro da mesma rotina.
 - **Descanso:** contador de três minutos, calculado pelo horário de término para considerar o tempo decorrido ao voltar de outro aplicativo para a mesma tela.
 - **Armazenamento local:** exercícios e grupos musculares permanecem salvos ao reabrir o app.
 - **Exportação:** geração de um arquivo JSON com exercícios, séries e referências de imagens, incluindo fotos locais associadas aos exercícios.
@@ -106,7 +109,7 @@ A rotina incluída em [creator-routine.json](src/data/creator-routine.json) é c
 
 A biblioteca e os registros locais podem ser usados sem internet depois da instalação. Alterações em um celular não são enviadas automaticamente para outros usuários.
 
-No perfil, **Exportar minha rotina** permite salvar ou compartilhar o JSON. A exportação atual contém os exercícios e suas séries; não é um backup completo dos grupos musculares personalizados, do perfil ou dos textos da página Minha proposta. Ainda não há uma tela de importação desse arquivo.
+No perfil, **Exportar minha rotina** permite salvar ou compartilhar o JSON da rotina do criador. A exportação atual contém os exercícios e suas séries; não inclui as rotinas pessoais nem é um backup completo dos grupos musculares personalizados, do perfil ou dos textos da página Minha proposta. Ainda não há uma tela de importação desse arquivo.
 
 ## Organização do código
 
@@ -118,7 +121,8 @@ src/
     treino.tsx          Divisão semanal e edição dos grupos
     dia/[id].tsx        Tela dos exercícios do dia escolhido
     sobre-meutreino.tsx Página Minha proposta
-    seu-treino.tsx      Área de rotina própria, em desenvolvimento
+    seu-treino.tsx      Lista e criação de rotinas pessoais
+    rotina/             Divisão pessoal e exercícios de cada dia
     _layout.tsx         Configuração da navegação
   components/           Componentes compartilhados e contador de descanso
   constants/            Cores e estilos de tema
@@ -184,7 +188,6 @@ npx expo-doctor
 
 ## Em desenvolvimento
 
-- Criação de uma rotina própria na área Seu próprio treino.
 - Notificação com tempo restante e aviso de descanso confiável em segundo plano.
 - Histórico de sessões concluídas e gráficos de evolução.
 - Importação de rotina pelo aplicativo.
@@ -193,6 +196,7 @@ O som do contador atual não é garantido com o aplicativo em segundo plano ou a
 
 ## Guias do projeto
 
+- [Como funcionam as rotinas pessoais e onde editar](docs/como-funciona-meu-treino.md)
 - [Biblioteca de imagens e pesquisa de exercícios](docs/biblioteca-de-imagens.md)
 - [Exportação da rotina](docs/exportar-rotina.md)
 - [Instalação no Android](docs/instalar-no-android.md)

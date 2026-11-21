@@ -8,16 +8,22 @@
 
 import type { FourSets, LocalExercise } from './tipos-e-validacao';
 
-export type SetChange = { index: number; weight?: string; repetitions?: number };
+export type SetChange = { index: number; weight?: string | null; repetitions?: number | null };
 
 export function exerciseKey(name: string) {
   return name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim().toLowerCase().replace(/\s+/g, ' ');
 }
 
+// O mesmo nome pode sincronizar dias da MESMA rotina, nunca rotinas diferentes.
+export function exerciseScope(dayId: string) {
+  return dayId.startsWith('personal:') ? dayId.split(':').slice(0, 2).join(':') : 'creator';
+}
+
 export function applySetChanges(sets: FourSets, changes: readonly SetChange[]): FourSets {
   return sets.map((set, index) => {
     const changed = changes.find((change) => change.index === index);
-    return changed ? { weight: changed.weight ?? set.weight, repetitions: changed.repetitions ?? set.repetitions } : { ...set };
+    // undefined é "não alterar"; null é "limpar o campo", e precisa ser salvo.
+    return changed ? { weight: changed.weight !== undefined ? changed.weight : set.weight, repetitions: changed.repetitions !== undefined ? changed.repetitions : set.repetitions } : { ...set };
   }) as FourSets;
 }
 
@@ -53,13 +59,17 @@ export async function initializeDatabase(db: ExerciseDatabase) {
   if (!columns.some((column) => column.name === 'library_image_id')) {
     await db.execAsync('ALTER TABLE creator_exercises ADD COLUMN library_image_id TEXT');
   }
+  if (!columns.some((column) => column.name === 'recommendation_id')) {
+    await db.execAsync('ALTER TABLE creator_exercises ADD COLUMN recommendation_id TEXT');
+  }
 }
 
-type Row = { id: string; day_id: string; name: string; image_file: string | null; library_image_id: string | null; position: number; sets_json: string };
+type Row = { id: string; day_id: string; name: string; image_file: string | null; library_image_id: string | null; recommendation_id: string | null; position: number; sets_json: string };
 
 function fromRow(row: Row): LocalExercise {
   return { id: row.id, dayId: row.day_id, name: row.name,
     imageFile: row.image_file, ...(row.library_image_id ? { libraryImageId: row.library_image_id } : {}),
+    ...(row.recommendation_id ? { recommendationId: row.recommendation_id } : {}),
     position: row.position, sets: JSON.parse(row.sets_json) };
 }
 
@@ -90,17 +100,22 @@ export function createRepository(db: ExerciseDatabase) {
       return rows.map(fromRow);
     },
     async loadAll(): Promise<LocalExercise[]> {
-      const rows = await db.getAllAsync<Row>('SELECT * FROM creator_exercises ORDER BY day_id, position, id');
+      // A exportação do perfil continua restrita à rotina do criador.
+      const rows = await db.getAllAsync<Row>("SELECT * FROM creator_exercises WHERE day_id NOT LIKE 'personal:%' ORDER BY day_id, position, id");
       return rows.map(fromRow);
     },
     async save(exercise: LocalExercise) {
-      // Uma única gravação atômica mantém as quatro séries juntas.
-      await db.runAsync(`INSERT INTO creator_exercises (id, day_id, name, image_file, position, sets_json, library_image_id)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
+      if (exercise.dayId.startsWith('personal:')) {
+        const day = await db.getAllAsync('SELECT id FROM personal_routine_days WHERE id=? AND rest=0', exercise.dayId);
+        if (!day.length) throw new Error('Este dia foi removido ou está marcado como descanso.');
+      }
+      // Uma única gravação atômica mantém todas as séries juntas.
+      await db.runAsync(`INSERT INTO creator_exercises (id, day_id, name, image_file, position, sets_json, library_image_id, recommendation_id)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         ON CONFLICT(id) DO UPDATE SET name=excluded.name, image_file=excluded.image_file,
-        position=excluded.position, sets_json=excluded.sets_json, library_image_id=excluded.library_image_id
+        position=excluded.position, sets_json=excluded.sets_json, library_image_id=excluded.library_image_id, recommendation_id=excluded.recommendation_id
         WHERE creator_exercises.day_id=excluded.day_id`,
-      exercise.id, exercise.dayId, exercise.name, exercise.imageFile, exercise.position, JSON.stringify(exercise.sets), exercise.libraryImageId ?? null);
+      exercise.id, exercise.dayId, exercise.name, exercise.imageFile, exercise.position, JSON.stringify(exercise.sets), exercise.libraryImageId ?? null, exercise.recommendationId ?? null);
     },
     async seedIfEmpty(exercises: readonly LocalExercise[]): Promise<boolean> {
       if (!exercises.length) return false;
@@ -125,11 +140,23 @@ export function createRepository(db: ExerciseDatabase) {
     async remove(dayId: string, id: string) {
       await db.runAsync('DELETE FROM creator_exercises WHERE id = ? AND day_id = ?', id, dayId);
     },
-    async syncSets(name: string, changes: readonly SetChange[]) {
+    async reorder(dayId: string, ids: string[]) {
+      await db.execAsync('BEGIN IMMEDIATE');
+      try {
+        const current = await repository.load(dayId);
+        if (new Set(ids).size !== current.length || ids.length !== current.length || current.some((item) => !ids.includes(item.id))) throw new Error('A lista de exercícios mudou. Tente novamente.');
+        for (const [position, id] of ids.entries()) await db.runAsync('UPDATE creator_exercises SET position=? WHERE id=? AND day_id=?', position, id, dayId);
+        await db.execAsync('COMMIT');
+      } catch (error) { await db.execAsync('ROLLBACK'); throw error; }
+    },
+    async syncSets(name: string, changes: readonly SetChange[], dayId = 'segunda') {
       if (!changes.length) return;
-      const rows = await db.getAllAsync<{ id: string; name: string; sets_json: string }>(
-        'SELECT id, name, sets_json FROM creator_exercises');
-      const matching = rows.filter((row) => exerciseKey(row.name) === exerciseKey(name));
+      type SyncRow = { id: string; day_id: string; name: string; sets_json: string };
+      const rows = exerciseScope(dayId) === 'creator'
+        ? await db.getAllAsync<SyncRow>("SELECT id,day_id,name,sets_json FROM creator_exercises WHERE day_id NOT LIKE 'personal:%'")
+        : await db.getAllAsync<SyncRow>(`SELECT e.id,e.day_id,e.name,e.sets_json FROM creator_exercises e
+          JOIN personal_routine_days d ON d.id=e.day_id WHERE d.routine_id=?`, dayId.split(':')[1]);
+      const matching = rows.filter((row) => exerciseScope(row.day_id) === exerciseScope(dayId) && exerciseKey(row.name) === exerciseKey(name));
       if (!matching.length) return;
       // Uma instrução atômica atualiza somente as séries, preservando os dados de cada dia.
       const params: (string | number | null)[] = [];

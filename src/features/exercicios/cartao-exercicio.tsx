@@ -16,9 +16,10 @@ import { exerciseImages } from '@/data/exercise-images.generated';
 import { ExerciseImage } from './imagem-exercicio';
 import { ImageLibraryModal } from './seletor-biblioteca-imagens';
 import { imageUri, pickExerciseImage, removeExerciseImage } from './fotos-do-celular';
-import { type FourSets, type LocalExercise, stepWeight } from './tipos-e-validacao';
+import { type FourSets, type LocalExercise, stepRepetitions, stepWeight } from './tipos-e-validacao';
+import { recommendedExercises } from '@/data/exercicios-recomendados';
 import { NumericControl } from './campo-carga-repeticoes';
-import { deleteExercise, updateExercise } from './estado-exercicios';
+import { deleteExercise, moveExercise, updateExercise } from './estado-exercicios';
 import { CopyExerciseModal } from './seletor-dia-para-copiar';
 
 export function ExerciseCard({ exercise, expanded, onToggle }: {
@@ -39,6 +40,8 @@ export function ExerciseCard({ exercise, expanded, onToggle }: {
     : uri ? { uri } : undefined;
   const imageKey = exercise.libraryImageId ?? exercise.imageFile ?? 'none';
   const hasImage = Boolean(exercise.libraryImageId || exercise.imageFile);
+  const personal = exercise.dayId.startsWith('personal:');
+  const recommendation = exercise.recommendationId ? recommendedExercises[exercise.recommendationId] : undefined;
 
   function chooseLibrary(id: string) {
     updateExercise(exercise.dayId, exercise.id, (current) => ({ ...current, imageFile: null, libraryImageId: id }));
@@ -71,20 +74,20 @@ export function ExerciseCard({ exercise, expanded, onToggle }: {
     } finally { setPicking(false); setShowSources(false); }
   }
 
-  function changeSet(index: number, field: 'weight' | 'repetitions', value: string | 1 | -1, stepping: boolean) {
+  function changeSet(index: number, field: 'weight' | 'repetitions', value: string | null | 1 | -1, stepping: boolean) {
     updateExercise(exercise.dayId, exercise.id, (current) => {
       const sets = current.sets.map((set, i) => {
         if (i !== index) return set;
-        if (field === 'weight') return { ...set, weight: stepping ? stepWeight(set.weight, value as 1 | -1) : String(value) };
+        if (field === 'weight') return { ...set, weight: stepping ? stepWeight(set.weight, value as 1 | -1) : value === null ? null : String(value) };
         return { ...set, repetitions: stepping
-          ? Math.min(Number.MAX_SAFE_INTEGER, Math.max(0, set.repetitions + Number(value))) : Number(value) };
+          ? stepRepetitions(set.repetitions, value as 1 | -1) : value === null ? null : Number(value) };
       }) as FourSets;
       return { ...current, sets };
     });
   }
 
   function confirmDelete() {
-    Alert.alert('Excluir exercício?', `“${exercise.name}” e suas quatro séries serão excluídos somente deste dia.`, [
+    Alert.alert('Excluir exercício?', `“${exercise.name}” e suas ${exercise.sets.length} séries serão excluídos somente deste dia.`, [
       { text: 'Cancelar', style: 'cancel' },
       { text: 'Excluir', style: 'destructive', onPress: () => deleteExercise(exercise.dayId, exercise.id) },
     ]);
@@ -93,12 +96,13 @@ export function ExerciseCard({ exercise, expanded, onToggle }: {
   return (
     <View style={local.card}>
       <Pressable accessibilityRole="button" accessibilityState={{ expanded }}
-        accessibilityLabel={`${exercise.name}, 4 séries`} accessibilityHint={expanded ? 'Fechar detalhes' : 'Expandir detalhes'}
+        accessibilityLabel={`${exercise.name}, ${exercise.sets.length} séries`} accessibilityHint={expanded ? 'Fechar detalhes' : 'Expandir detalhes'}
         onPress={onToggle} style={({ pressed }) => [local.header, pressed && styles.pressed]}>
         <ExerciseImage key={`small-${imageKey}`} source={source} small />
         <View style={local.heading}>
           <Text style={local.name}>{exercise.name}</Text>
-          <Text style={local.subtitle}>4 séries</Text>
+          <Text style={local.subtitle}>{exercise.sets.length} séries</Text>
+          {recommendation && <Text style={local.subtitle}>Sugestão inicial · editável</Text>}
         </View>
         <Text style={styles.accent}>{expanded ? '⌃' : '⌄'}</Text>
       </Pressable>
@@ -118,6 +122,18 @@ export function ExerciseCard({ exercise, expanded, onToggle }: {
             </>}
           </View>
           {!editing && <Action label="Copiar exercício" onPress={() => setShowCopy(true)} disabled={picking} />}
+          {/* A rotina do criador mantém as quatro séries; só a área pessoal ganha estes controles. */}
+          {personal && <View style={local.actions}>
+            <Action label="Mover acima" onPress={() => moveExercise(exercise.dayId, exercise.id, -1)} />
+            <Action label="Mover abaixo" onPress={() => moveExercise(exercise.dayId, exercise.id, 1)} />
+            <Action label="+ Série" disabled={exercise.sets.length >= 12} onPress={() => updateExercise(exercise.dayId, exercise.id, (current) => ({ ...current, sets: [...current.sets, { weight: null, repetitions: null }] }))} />
+            <Action label="− Série" disabled={exercise.sets.length <= 1} onPress={() => {
+              Alert.alert('Remover última série?', 'Os valores desta série serão removidos somente deste exercício.', [
+                { text: 'Cancelar', style: 'cancel' },
+                { text: 'Remover', style: 'destructive', onPress: () => updateExercise(exercise.dayId, exercise.id, (current) => ({ ...current, sets: current.sets.slice(0, -1) })) },
+              ]);
+            }} />
+          </View>}
           {showSources && <View>
             <Action label="Escolher da biblioteca" onPress={() => setShowLibrary(true)} disabled={picking} />
             <Action label={picking ? 'Abrindo galeria…' : 'Escolher da galeria'} onPress={() => { void chooseImage(); }} disabled={picking} />
@@ -141,10 +157,10 @@ export function ExerciseCard({ exercise, expanded, onToggle }: {
             <View key={index} style={local.series}>
               <Text style={local.seriesLabel}>Série {index + 1}</Text>
               <View style={local.controls}>
-                <NumericControl label={`Carga em kg da série ${index + 1}`} value={set.weight}
+                <NumericControl label={`Carga em kg da série ${index + 1}`} value={set.weight ?? ''} allowEmpty={personal}
                   onValue={(value) => changeSet(index, 'weight', value, false)}
                   onStep={(delta) => changeSet(index, 'weight', delta, true)} />
-                <NumericControl label={`Repetições da série ${index + 1}`} value={String(set.repetitions)} integer
+                <NumericControl label={`Repetições da série ${index + 1}`} value={set.repetitions === null ? '' : String(set.repetitions)} integer allowEmpty={personal}
                   onValue={(value) => changeSet(index, 'repetitions', value, false)}
                   onStep={(delta) => changeSet(index, 'repetitions', delta, true)} />
               </View>

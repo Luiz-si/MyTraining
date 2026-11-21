@@ -12,7 +12,7 @@ import { getRepository } from './conexao-banco';
 import { copyExerciseImage, removeExerciseImage } from './fotos-do-celular';
 import { createExerciseCopy, emptySets, type LocalExercise, validateExercise } from './tipos-e-validacao';
 import { createWriteQueue } from './fila-salvamento';
-import { applySetChanges, exerciseKey, type SetChange } from './consultas-banco';
+import { applySetChanges, exerciseKey, exerciseScope, type SetChange } from './consultas-banco';
 
 type DayState = { exercises: LocalExercise[]; loaded: boolean; loading: boolean; loadError: boolean };
 const emptyDay: DayState = { exercises: [], loaded: false, loading: false, loadError: false };
@@ -25,6 +25,7 @@ let serial = 0;
 let saveState = { pending: 0, error: false };
 const queue = createWriteQueue((state) => { saveState = state; emit(); });
 const enqueue = queue.enqueue;
+const sharedKey = (dayId: string, name: string) => `${exerciseScope(dayId)}|${exerciseKey(name)}`;
 
 function emit() { listeners.forEach((listener) => listener()); }
 function subscribe(listener: () => void) { listeners.add(listener); return () => { listeners.delete(listener); }; }
@@ -50,7 +51,7 @@ export function loadDay(dayId: string): Promise<void> {
   const loading = (async () => {
   try {
     const exercises = (await (await getRepository()).load(dayId)).map((exercise) => ({
-      ...exercise, sets: applySetChanges(exercise.sets, sharedChanges.get(exerciseKey(exercise.name)) ?? []),
+      ...exercise, sets: applySetChanges(exercise.sets, sharedChanges.get(sharedKey(dayId, exercise.name)) ?? []),
     }));
     exercises.forEach(validateExercise);
     setDay(dayId, { exercises, loaded: true, loading: false, loadError: false });
@@ -78,7 +79,7 @@ export function addExercise(dayId: string, name: string, image: {
     dayId, name: name.trim(), imageFile: image.imageFile ?? null,
     libraryImageId: image.libraryImageId ?? null,
     position: Math.max(-1, ...state.exercises.map((item) => item.position)) + 1,
-    sets: applySetChanges(emptySets(), sharedChanges.get(exerciseKey(name)) ?? []),
+    sets: applySetChanges(emptySets(dayId.startsWith('personal:')), sharedChanges.get(sharedKey(dayId, name)) ?? []),
   };
   validateExercise(exercise);
   setDay(dayId, { ...state, exercises: [...state.exercises, exercise] });
@@ -95,6 +96,7 @@ export function updateExercise(dayId: string, id: string, change: (exercise: Loc
   validateExercise(next);
   const changes: SetChange[] = next.sets.flatMap((set, index) => {
     const previous = current.sets[index];
+    if (!previous) return [];
     const patch: SetChange = { index };
     if (set.weight !== previous.weight) patch.weight = set.weight;
     if (set.repetitions !== previous.repetitions) patch.repetitions = set.repetitions;
@@ -102,20 +104,20 @@ export function updateExercise(dayId: string, id: string, change: (exercise: Loc
   });
   days.set(dayId, { ...state, exercises: state.exercises.map((item) => item.id === id ? next : item) });
   if (changes.length) {
-    const key = exerciseKey(next.name);
+    const key = sharedKey(dayId, next.name);
     const merged = new Map((sharedChanges.get(key) ?? []).map((patch) => [patch.index, patch]));
     changes.forEach((patch) => merged.set(patch.index, { ...merged.get(patch.index), ...patch }));
     sharedChanges.set(key, [...merged.values()]);
     for (const [otherDay, otherState] of days) {
       days.set(otherDay, { ...otherState, exercises: otherState.exercises.map((item) =>
-        exerciseKey(item.name) === key ? { ...item, sets: applySetChanges(item.sets, changes) } : item) });
+        sharedKey(otherDay, item.name) === key ? { ...item, sets: applySetChanges(item.sets, changes) } : item) });
     }
   }
   emit();
   enqueue(async () => {
     const repository = await getRepository();
     await repository.save(next);
-    await repository.syncSets(next.name, changes);
+    await repository.syncSets(next.name, changes, dayId);
     if (current.imageFile !== next.imageFile) removeExerciseImage(current.imageFile);
   });
   return true;
@@ -133,6 +135,7 @@ export function deleteExercise(dayId: string, id: string) {
 }
 
 export async function copyExercise(sourceDayId: string, id: string, targetDayId: string) {
+  if (exerciseScope(sourceDayId) !== exerciseScope(targetDayId)) throw new Error('Escolha outro dia da mesma rotina.');
   await loadDay(targetDayId);
   const source = days.get(sourceDayId)?.exercises.find((item) => item.id === id);
   const destination = days.get(targetDayId);
@@ -148,7 +151,7 @@ export async function copyExercise(sourceDayId: string, id: string, targetDayId:
     const copied = createExerciseCopy(source,
       `${Date.now().toString(36)}-${++serial}-${Math.random().toString(36).slice(2)}`,
       targetDayId, Math.max(-1, ...latestDestination.exercises.map((item) => item.position)) + 1, copiedFile);
-    copied.sets = applySetChanges(copied.sets, sharedChanges.get(exerciseKey(copied.name)) ?? []);
+    copied.sets = applySetChanges(copied.sets, sharedChanges.get(sharedKey(targetDayId, copied.name)) ?? []);
     validateExercise(copied);
     setDay(targetDayId, { ...latestDestination, exercises: [...latestDestination.exercises, copied] });
     enqueue(async () => { await (await getRepository()).save(copied); });
@@ -157,4 +160,26 @@ export async function copyExercise(sourceDayId: string, id: string, targetDayId:
     removeExerciseImage(copiedFile);
     throw error;
   }
+}
+
+// Após excluir/duplicar uma rotina, remove apenas seu cache. O SQLite é a fonte definitiva.
+export function forgetRoutineDays(dayIds: string[]) {
+  dayIds.forEach((id) => days.delete(id));
+  for (const key of sharedChanges.keys()) {
+    if (dayIds.some((id) => key.startsWith(`${exerciseScope(id)}|`))) sharedChanges.delete(key);
+  }
+  emit();
+}
+
+// Move apenas dentro do dia escolhido, sem alterar cargas ou os outros dias.
+export function moveExercise(dayId: string, id: string, direction: -1 | 1) {
+  const state = days.get(dayId);
+  if (!state?.loaded) return;
+  const exercises = [...state.exercises];
+  const from = exercises.findIndex((exercise) => exercise.id === id);
+  const to = from + direction;
+  if (from < 0 || to < 0 || to >= exercises.length) return;
+  [exercises[from], exercises[to]] = [exercises[to], exercises[from]];
+  setDay(dayId, { ...state, exercises: exercises.map((item, position) => ({ ...item, position })) });
+  enqueue(async () => (await getRepository()).reorder(dayId, exercises.map((item) => item.id)));
 }

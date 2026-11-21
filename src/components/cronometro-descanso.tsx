@@ -1,63 +1,97 @@
 /**
- * CONTADOR E SOM DO DESCANSO
- * Edite aqui: duração, aparência do botão e áudio ao terminar.
- * O prazo é calculado pelo horário de término, não apenas pela quantidade de atualizações.
- * Notificação e som garantido em segundo plano ainda não estão implementados.
- * Guia de localização: docs/onde-mexer-no-codigo.md
+ * BOTÃO DE DESCANSO: aparência, áudio e conexão com o relógio do celular.
+ * Regras da contagem: features/descanso/controle-cronometro.ts.
+ * Não agenda notificações nem garante som com o aplicativo suspenso.
  */
-
-import { workoutColors } from '@/constants/cores-app';
 import { useAudioPlayer } from 'expo-audio';
-import { useEffect, useState } from 'react';
-import { Pressable, Text } from 'react-native';
+import { SymbolView } from 'expo-symbols';
+import { useEffect, useRef, useState } from 'react';
+import { AppState, Pressable, StyleSheet, Text, View } from 'react-native';
+import Animated, { FadeIn, ReduceMotion } from 'react-native-reanimated';
+
+import { workoutColors as colors } from '@/constants/cores-app';
+import { createRestTimer, REST_SECONDS, type RestState } from '@/features/descanso/controle-cronometro';
 
 export default function RestTimer() {
-  // ÁUDIO: o caminho abaixo escolhe o arquivo que será tocado ao terminar.
+  // ÁUDIO: este caminho escolhe o aviso de finalização.
   const player = useAudioPlayer(require('../../assets/sounds/fim-descanso.mp3'));
-  const [seconds, setSeconds] = useState(180);
-  const minutes = Math.floor(seconds / 60);
-  const [running, setRunning] = useState(false);
-  const [endTime, setEndTime] = useState<number | null>(null);
-  const remainingSeconds = seconds % 60;
-  const displayTime = `${minutes}:${String(remainingSeconds).padStart(2, '0')}`;
-  // CONTAGEM: calcula os segundos restantes comparando o prazo com o horário atual.
-    useEffect(() => {
-    if (!running || endTime === null) {
-      return;
-    }
+  const controller = useRef<ReturnType<typeof createRestTimer> | null>(null);
+  const [state, setState] = useState<RestState>({ seconds: REST_SECONDS, running: false, completed: false });
+  const [audioError, setAudioError] = useState(false);
 
-    if (seconds === 0) {
-      player.seekTo(0);
-      player.play();
-      return;
-    }
+  useEffect(() => {
+    const timer = createRestTimer({
+      onChange: setState,
+      onComplete: (isCurrent) => {
+        // Um novo toque invalida um aviso que ainda aguarda o seekTo.
+        void (async () => {
+          try {
+            await player.seekTo(0);
+            if (isCurrent()) player.play();
+          } catch {
+            if (isCurrent()) setAudioError(true);
+          }
+        })();
+      },
+    });
+    controller.current = timer;
+    const subscription = AppState.addEventListener('change', (next) => {
+      if (next === 'active') timer.refresh();
+    });
+    return () => {
+      controller.current = null;
+      subscription.remove();
+      timer.dispose();
+      player.pause();
+    };
+  }, [player]);
 
-    const timeout = setTimeout(() => {
-      setSeconds(Math.max(0, Math.ceil((endTime - Date.now()) / 1000)));
-    }, 1000);
-
-    return () => clearTimeout(timeout);
-  }, [running, seconds, player, endTime]);
-
+  const displayTime = `${String(Math.floor(state.seconds / 60)).padStart(2, '0')}:${String(state.seconds % 60).padStart(2, '0')}`;
+  const title = state.running ? 'Descanso em andamento' : 'Iniciar descanso';
+  const hint = state.running ? 'Toque para reiniciar os 3 minutos' : state.completed ? 'Descanso concluído · Pronto para o próximo' : '3 minutos para recuperar';
 
   return (
-    // BOTÃO: o toque reinicia os três minutos; o style abaixo define tamanho e cor.
-    <Pressable
-      onPress={() => {
-        setSeconds(180);
-        setEndTime(Date.now() + 180 * 1000);
-        setRunning(true);
-        }}  
-      style={{
-        width: 64,
-        height: 64,
-        borderRadius: 32,
-        backgroundColor: '#00ff22',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
-    >
-      <Text style={{ color: workoutColors.onAccent, fontWeight: '700' }}>{displayTime}</Text>
-    </Pressable>
+    <View style={local.container}>
+      <Pressable
+        accessibilityRole="button"
+        accessibilityLabel={`${title}. ${displayTime}`}
+        accessibilityHint="Inicia ou reinicia um descanso de três minutos"
+        onPress={() => {
+          player.pause();
+          setAudioError(false);
+          controller.current?.start();
+        }}
+        style={({ pressed }) => [local.button, state.running && local.active, pressed && local.pressed]}
+      >
+        <View style={local.heading}>
+          <View style={local.icon}>
+            <SymbolView name={{ ios: 'timer', android: 'timer', web: 'timer' }} size={22} tintColor={colors.accent} />
+          </View>
+          <View style={local.copy}>
+            <Text style={local.title}>{title}</Text>
+            <Text style={local.hint}>{hint}</Text>
+          </View>
+          {state.running && <Animated.View entering={FadeIn.duration(180).reduceMotion(ReduceMotion.System)} style={local.dot} />}
+        </View>
+        <Text style={local.time}>{displayTime}</Text>
+      </Pressable>
+      {audioError && <Text accessibilityRole="alert" style={local.error}>Descanso concluído. Não foi possível reproduzir o som.</Text>}
+    </View>
   );
 }
+
+// VISUAL: cantos, degradê, espaços e tamanho do tempo exibido.
+const local = StyleSheet.create({
+  container: { gap: 8 },
+  button: { padding: 20, borderRadius: 22, borderWidth: 1, borderColor: colors.borderStrong, backgroundColor: colors.surface, backgroundImage: 'linear-gradient(135deg, #253F29 0%, #17251C 65%, #171F1B 100%)', gap: 16 },
+  active: { borderColor: colors.accent },
+  heading: { flexDirection: 'row', alignItems: 'center', gap: 12 },
+  icon: { width: 42, height: 42, borderRadius: 14, backgroundColor: '#30472B', alignItems: 'center', justifyContent: 'center' },
+  copy: { flex: 1, gap: 5 },
+  title: { color: colors.text, fontSize: 16, fontWeight: '700' },
+  hint: { color: colors.textSecondary, fontSize: 12, lineHeight: 18 },
+  dot: { width: 7, height: 7, borderRadius: 4, backgroundColor: colors.accent },
+  time: { color: colors.accent, fontSize: 44, lineHeight: 54, fontWeight: '800', fontVariant: ['tabular-nums'], letterSpacing: 1 },
+  pressed: { opacity: 0.82, transform: [{ scale: 0.99 }] },
+  error: { color: colors.textSecondary, fontSize: 13, lineHeight: 20 },
+});

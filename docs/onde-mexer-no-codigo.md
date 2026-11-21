@@ -39,8 +39,7 @@ Os caminhos são links: clique no nome para abrir o arquivo. Para encontrar uma 
 - **`src/components/` — peças reutilizáveis:** botões, estrutura de tela, cartões dos dias e contador. Uma peça pode aparecer em mais de uma tela.
 - **`src/data/` — conteúdo e dados iniciais:** nomes, frases, grupos padrão e referências das imagens. Não é o banco atualizado do celular.
 - **`src/constants/` — valores compartilhados:** principalmente as cores do app.
-- **`src/features/` — funcionalidades:** reúne os arquivos de um mesmo assunto. `exercicios/`, `divisao-semanal/` e `minha-proposta/` são os três grupos principais.
-- **`src/hooks/` — funções reutilizáveis do React:** os arquivos atuais dessa pasta tratam o tema dos componentes de exemplo.
+- **`src/features/` — funcionalidades:** reúne os arquivos de um mesmo assunto: `exercicios/`, `rotinas/`, `descanso/`, `divisao-semanal/` e `minha-proposta/`.
 - **`assets/` — recursos:** arquivos reais de imagem, ícone e som.
 - **`scripts/` — ferramentas de desenvolvimento:** por exemplo, atualizar o catálogo de imagens. Não são telas.
 - **`tests/` — verificações automatizadas:** exercitam as regras sem usar seu banco pessoal do celular.
@@ -79,6 +78,10 @@ Os nomes de funções e componentes existentes foram mantidos nesta organizaçã
 
 ## Onde ficam os dados salvos
 
+Para a área **Seu próprio treino**, veja o [guia completo das rotinas pessoais](como-funciona-meu-treino.md). Os modelos ficam em `src/data/modelos-rotinas.ts`, as regras e formulários em `src/features/rotinas/` e as telas em `src/app/seu-treino.tsx` e `src/app/rotina/`.
+
+Os exercícios sugeridos e o vínculo exato de suas imagens ficam em [exercicios-recomendados.ts](../src/data/exercicios-recomendados.ts). A distribuição por modelo fica em `recommendationsByModel`; nomes e IDs de imagem, em `recommendedExercises`.
+
 Não confunda três etapas:
 
 1. **Tela:** recebe a digitação e os toques.
@@ -107,7 +110,7 @@ O banco real fica no armazenamento privado do aplicativo no celular. `creator-ro
 - **`creator-routine.json`** contém os dados exportados usados na primeira inicialização.
 - Bibliotecas, propriedades e funções prontas, como `Pressable`, `useState`, `fontSize` e `onPress`, continuam com seus nomes da API.
 
-Arquivos do modelo Expo, como `explore.tsx`, `app-tabs.tsx` e `animated-icon.tsx`, foram identificados no comentário do topo como exemplos. Eles não são a tela principal, o ícone Android nem o contador de descanso do MeuTreino. Foram preservados para evitar apagar conteúdo fora do escopo.
+Os exemplos antigos do modelo Expo (`explore.tsx`, `app-tabs.tsx`, `animated-icon.tsx`, componentes de tema e o script `reset-project.js`) foram removidos por não participarem do fluxo do MeuTreino. Caso uma aba antiga ainda esteja aberta no VS Code, feche-a para não recriar um desses arquivos sem querer ao salvar.
 
 ## Nomes antigos → nomes atuais
 

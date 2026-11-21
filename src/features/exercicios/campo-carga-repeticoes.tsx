@@ -11,19 +11,22 @@ import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 
 import { parseRepetitions, parseWeight } from './tipos-e-validacao';
 
-export function NumericControl({ value, label, integer = false, onValue, onStep }: {
+export function NumericControl({ value, label, integer = false, allowEmpty = false, onValue, onStep }: {
   value: string;
   label: string;
   integer?: boolean;
-  onValue: (value: string) => void;
+  allowEmpty?: boolean;
+  onValue: (value: string | null) => void;
   onStep: (delta: 1 | -1) => void;
 }) {
   const [draft, setDraft] = useState<string | null>(null);
   const text = draft ?? value;
-  const valid = integer ? parseRepetitions(text) !== null : parseWeight(text) !== null;
+  const valid = allowEmpty && text.trim() === '' || (integer ? parseRepetitions(text) !== null : parseWeight(text) !== null);
 
   function change(text: string) {
     setDraft(text);
+    // Apagar todo o texto remove o valor salvo, em vez de transformar vazio em zero.
+    if (allowEmpty && text.trim() === '') { onValue(null); return; }
     const parsed = integer ? parseRepetitions(text) : parseWeight(text);
     if (parsed !== null) onValue(String(parsed));
   }
@@ -37,11 +40,12 @@ export function NumericControl({ value, label, integer = false, onValue, onStep 
     <View style={local.column}>
       <View style={local.control}>
         <Pressable accessibilityRole="button" accessibilityLabel={`Diminuir ${label}`}
-          disabled={Number(value) === 0} onPress={() => step(-1)}
-          style={({ pressed }) => [local.step, Number(value) === 0 && local.disabled, pressed && local.pressed]}>
+          disabled={value === '' || Number(value) === 0} onPress={() => step(-1)}
+          style={({ pressed }) => [local.step, (value === '' || Number(value) === 0) && local.disabled, pressed && local.pressed]}>
           <Text style={local.symbol}>−</Text>
         </Pressable>
         <TextInput accessibilityLabel={label} value={text} selectTextOnFocus
+          placeholder={allowEmpty ? integer ? 'Repet.' : 'Peso' : undefined} placeholderTextColor={workoutColors.textSecondary}
           inputMode={integer ? 'numeric' : 'decimal'} maxLength={24}
           onChangeText={change} onBlur={() => setDraft(null)}
           style={[local.input, !valid && local.invalid]} />
